@@ -1,0 +1,15 @@
+digraph G{
+"ini"[label = "Ini", style = filled, shape=box]
+"ini" -> "nAlberto"
+"nAlberto"[label = "Alberto", style = filled, shape=box]
+"nAlberto,Samuel,Perez"[label = "Samuel", style = filled, shape=circle]
+"nAlberto" -> "nAlberto,Samuel,Perez"[constraint=false];
+"nAlberto,Samuel,Perez" -> "nAlberto"[constraint=false];
+{rank=same; "nAlberto"  "nAlberto,Samuel,Perez"}
+{rank=same; "nAlberto,Samuel,Perez"  "nAlberto"}
+"ini" -> "nPerez"
+{rank=same; "ini"  "nPerez"}
+"nPerez"[label = "Perez", style = filled, shape=box]
+"nPerez" -> "nAlberto,Samuel,Perez"[rankdir=UD];
+"nAlberto,Samuel,Perez" -> "nPerez"
+}

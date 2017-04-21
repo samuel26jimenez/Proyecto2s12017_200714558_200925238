@@ -2,9 +2,34 @@ __author__ = 'Samuel'
 import os
 escritorio = os.path.expanduser("~/Desktop")
 
+class NodoAvl:
+    activos = None
+
+    def __init__(self, nombre):
+        self.nombre = nombre
+
+
+
+        self.derecho = None
+        self.izquierdo = None
+        self.fe = 0
+
+    def insertaNombre(self, nombre):
+        nuevo = NodoUsar(nombre)
+        self.activos.cabeza = self.activos.insertarActivo(nuevo, self.activos.cabeza)
+        self.activos.cabeza, val = self.activos.BalanceFactor(self.activos.cabeza)
+        self.activos.cabeza = self.activos.ArbolCorre(self.activos.cabeza)
+
+class NodoUsar:
+    def __init__(self, nombre):
+        self.nombre = nombre
+        self.fe = 0
+
+
 class AVL:
     def __init__(self):
-        self.raizG=None
+        self.cabeza = None
+
 
     def esHoja(self, nodo):
         if nodo==None:
@@ -13,117 +38,166 @@ class AVL:
             return False
         return True
 
-    def factorEquilibrio(self, raiz):
-        if raiz==None:
-            return raiz, 0
-        if self.esHoja(raiz):
-            raiz.fe = 0
-            return raiz, 1
-        elif raiz.izquierdo and raiz.derecho:
-            raiz.izquierdo, valorIz = self.factorEquilibrio(raiz.izquierdo)
-            raiz.derecho, valorDer = self.factorEquilibrio(raiz.derecho)
-            raiz.fe = valorDer - valorIz
-            if valorDer> valorIz:
-                return raiz, (1+valorDer)
-            else:
-                return raiz, (1+valorIz)
-        elif raiz.izquierdo:
-            raiz.izquierdo, valorIz = self.factorEquilibrio(raiz.izquierdo)
-            raiz.fe = valorIz*(-1)
-            return raiz, (1+ valorIz)
-        elif raiz.derecho:
-            raiz.derecho, valorDer = self.factorEquilibrio(raiz.derecho)
-            raiz.fe = valorDer
-            return raiz, (1+ valorDer)
-        return raiz
 
-    def rotacionII(self, rai):
-        n0 = rai
-        n1 = rai.izquierdo
+
+
+
+
+    def BalanceFactor(self, iniciarRa):
+        if iniciarRa==None:
+            return iniciarRa, 0
+        if self.esHoja(iniciarRa):
+            iniciarRa.fe = 0
+            return iniciarRa, 1
+        elif iniciarRa.izquierdo and iniciarRa.derecho:
+            iniciarRa.izquierdo, valorIz = self.BalanceFactor(iniciarRa.izquierdo)
+            iniciarRa.derecho, valorDer = self.BalanceFactor(iniciarRa.derecho)
+            iniciarRa.fe = valorDer - valorIz
+            if valorDer> valorIz:
+                return iniciarRa, (1+valorDer)
+            else:
+                return iniciarRa, (1+valorIz)
+        elif iniciarRa.izquierdo:
+            iniciarRa.izquierdo, valorIz = self.BalanceFactor(iniciarRa.izquierdo)
+            iniciarRa.fe = valorIz*(-1)
+            return iniciarRa, (1+ valorIz)
+        elif iniciarRa.derecho:
+            iniciarRa.derecho, valorDer = self.BalanceFactor(iniciarRa.derecho)
+            iniciarRa.fe = valorDer
+            return iniciarRa, (1+ valorDer)
+        return iniciarRa
+
+
+
+
+
+
+
+    def rotacionIzIz(self, inici):
+        n0 = inici
+        n1 = inici.izquierdo
         n0.izquierdo = n1.derecho
         n1.derecho = n0
         return n1
 
-    def rotacionID(self, rai):
-        n0 = rai
-        n1 = rai.izquierdo
-        n2 = rai.izquierdo.derecho
+
+
+
+
+
+
+
+    def rotacionIzDer(self, inici):
+        n0 = inici
+        n1 = inici.izquierdo
+        n2 = inici.izquierdo.derecho
         n0.izquierdo = n2.derecho
         n1.derecho = n2.izquierdo
         n2.derecho = n0
         n2.izquierdo = n1
         return n2
 
-    def rotacionDD(self, rai):
-        n0 = rai
-        n1 = rai.derecho
+
+
+
+
+
+    def rotacionDerDer(self, inici):
+        n0 = inici
+        n1 = inici.derecho
         n0.derecho = n1.izquierdo
         n1.izquierdo = n0
         return n1
 
-    def rotacionDI(self, rai):
-        n0 = rai
-        n1 = rai.derecho
-        n2 = rai.derecho.izquierdo
+
+
+
+
+    def rotacionDerIz(self, inici):
+        n0 = inici
+        n1 = inici.derecho
+        n2 = inici.derecho.izquierdo
         n0.derecho = n2.izquierdo
         n1.izquierdo = n2.derecho
         n2.derecho = n1
         n2.izquierdo = n0
         return n2
 
-    def evaluarCasosAVL(self, ra):
+
+
+
+
+
+    def CasosAVLConsdirar(self, ra):
         if ra.fe==-2:
             if ra.izquierdo.fe==-1:
-                ra = self.rotacionII(ra)
+                ra = self.rotacionIzIz(ra)
             else:
-                ra = self.rotacionID(ra)
+                ra = self.rotacionIzDer(ra)
         if ra.fe==2:
             if ra.derecho.fe==1:
-                ra = self.rotacionDD(ra)
+                ra = self.rotacionDerDer(ra)
             else:
-                ra = self.rotacionDI(ra)
+                ra = self.rotacionDerIz(ra)
         return ra
 
-    def recorrerArbol(self, ra):
+
+
+
+
+
+
+    def ArbolCorre(self, ra):
         if ra==None:
             return
         if ra.izquierdo:
-           ra.izquierdo = self.recorrerArbol(ra.izquierdo)
+           ra.izquierdo = self.ArbolCorre(ra.izquierdo)
         if ra.derecho:
-            ra.derecho = self.recorrerArbol(ra.derecho)
+            ra.derecho = self.ArbolCorre(ra.derecho)
         if ra.fe == 2 or ra.fe==-2:
-            ra = self.evaluarCasosAVL(ra)
-            ra, val = self.factorEquilibrio(ra)
+            ra = self.CasosAVLConsdirar(ra)
+            ra, val = self.BalanceFactor(ra)
         return ra
 
-    def insertarActivo(self, nodoN, raiz):
-        if raiz==None:
-            raiz = nodoN
+
+
+
+
+
+
+    def insertarActivo(self, nodoN, iniciarRa):
+        if iniciarRa==None:
+            iniciarRa = nodoN
 
         else:
-            if raiz.id > nodoN.id:
-                raiz.izquierdo = self.insertarActivo(nodoN, raiz.izquierdo)
+            if iniciarRa.nombre > nodoN.nombre:
+                iniciarRa.izquierdo = self.insertarActivo(nodoN, iniciarRa.izquierdo)
             else:
-                raiz.derecho = self.insertarActivo(nodoN,raiz.derecho)
-        return raiz
+                iniciarRa.derecho = self.insertarActivo(nodoN,iniciarRa.derecho)
+        return iniciarRa
 
-    def eliminarActivo(self, raiz, id):
-        if raiz == None:
+
+
+
+
+
+    def eliminarActivo(self, iniciarRa, id):
+        if iniciarRa == None:
             return
-        elif raiz.id > id:
-            raiz.izquierdo = self.eliminarActivo(raiz.izquierdo, id)
-        elif raiz.id < id:
-            raiz.derecho = self.eliminarActivo(raiz.derecho, id)
+        elif iniciarRa.id > id:
+            iniciarRa.izquierdo = self.eliminarActivo(iniciarRa.izquierdo, id)
+        elif iniciarRa.id < id:
+            iniciarRa.derecho = self.eliminarActivo(iniciarRa.derecho, id)
         else:
-            q = raiz
+            q = iniciarRa
             if q.izquierdo == None:
-                raiz = q.derecho
+                iniciarRa = q.derecho
             elif q.derecho== None:
-                raiz = q.izquierdo
+                iniciarRa = q.izquierdo
             else:
                 self.reemplazar(q)
             q = None
-        return raiz
+        return iniciarRa
 
 
 
@@ -165,38 +239,29 @@ class AVL:
 
 
 
-    def graficarAVL(self, raiz):
-        if raiz==None:
+    def graficarAVL(self, iniciarRa):
+        if iniciarRa==None:
             print"esta vacio :("
             return
-        file = open(escritorio+"\\avl.dot", "w")
+        file = open("avl.dot", "w")
         file.write("digraph G{\n")
-        file.write(self.graficarNodoAVL(raiz))
+        file.write(self.graficarNodoAVL(iniciarRa))
         file.write("}\n")
         file.close()
-        os.system("dot -Tpng "+escritorio+"\\avl.dot > "+escritorio+"\\avl.png")
-
-
-
-
+        os.system("dot -Tpng avl.dot > avl.png")
 
 
     def graficarNodoAVL(self, nodo):
-        cadena = "nodo"+self.obtenerHASH(nodo)+"[label=\"<f0>|<f1>"+nodo.nombre+" \\n"+nodo.descripcion+"|<f2>\", shape=record,style=filled,fillcolor=\"blue:cyan\", gradientangle=\"270\"]\n"
+        cadena = "nodo"+self.getDispersion(nodo)+"[label=\"<f0>|<f1>"+nodo.nombre+" \\n"+ "Datos....." +"|<f2>\", shape=record,style=filled,fillcolor=\"blue:cyan\", gradientangle=\"270\"]\n"
         if nodo.izquierdo:
             cadena+=self.graficarNodoAVL(nodo.izquierdo)
-            cadena+= "nodo"+self.obtenerHASH(nodo)+":f0 -> "+"nodo"+self.obtenerHASH(nodo.izquierdo)+"\n"
+            cadena+= "nodo"+self.getDispersion(nodo)+":f0 -> "+"nodo"+self.getDispersion(nodo.izquierdo)+"\n"
         if nodo.derecho:
             cadena += self.graficarNodoAVL(nodo.derecho)
-            cadena += "nodo" + self.obtenerHASH(nodo) + ":f2 -> " + "nodo" + self.obtenerHASH(nodo.derecho)+"\n"
+            cadena += "nodo" + self.getDispersion(nodo) + ":f2 -> " + "nodo" + self.getDispersion(nodo.derecho)+"\n"
         return cadena
 
-
-
-
-
-
-    def obtenerHASH(self, objeto):
+    def getDispersion(self, objeto):
         id = hash(objeto)
         if int(id) < 0:
             return str((-1 * id))
@@ -204,34 +269,37 @@ class AVL:
 
 
 
-    def modificarActivo(self, id, nuevaD, raiz):
-        if raiz==None:
-            return raiz
-        if raiz.id == id:
-            raiz.descripcion = nuevaD
-            return raiz
-        if raiz.id<id:
-            raiz.derecho = self.modificarActivo(id, nuevaD, raiz.derecho)
-            return raiz
-        if raiz.id>id:
-            raiz.izquierdo = self.modificarActivo(id, nuevaD, raiz.izquierdo)
-            return raiz
-        return raiz
+
+
+
+    def modificarActivo(self, id, nuevaD, iniciarRa):
+        if iniciarRa==None:
+            return iniciarRa
+        if iniciarRa.id == id:
+            iniciarRa.descripcion = nuevaD
+            return iniciarRa
+        if iniciarRa.id<id:
+            iniciarRa.derecho = self.modificarActivo(id, nuevaD, iniciarRa.derecho)
+            return iniciarRa
+        if iniciarRa.id>id:
+            iniciarRa.izquierdo = self.modificarActivo(id, nuevaD, iniciarRa.izquierdo)
+            return iniciarRa
+        return iniciarRa
 
 
 
 
 
 
-    def retornarID(self, raiz):
+    def retornarIzDer(self, iniciarRa):
         cadena = ""
-        if raiz==None:
+        if iniciarRa==None:
             return cadena
-        cadena+= raiz.id+","+raiz.nombre+","+raiz.descripcion
-        if raiz.derecho:
-            cadena+=","+self.retornarID(raiz.derecho)
-        if raiz.izquierdo:
-            cadena+=","+self.retornarID(raiz.izquierdo)
+        cadena+= iniciarRa.id+","+iniciarRa.nombre+","+iniciarRa.descripcion
+        if iniciarRa.derecho:
+            cadena+=","+self.retornarIzDer(iniciarRa.derecho)
+        if iniciarRa.izquierdo:
+            cadena+=","+self.retornarIzDer(iniciarRa.izquierdo)
         print cadena
         return cadena
 
@@ -239,19 +307,75 @@ class AVL:
 
 
 
-    def retornarDesripcion(self, raiz, id):
-        if raiz==None:
+
+
+    def retornarDesripcion(self, iniciarRa, id):
+        if iniciarRa==None:
             return "No existe, nada"
-        if raiz.id == id:
-            return raiz.descripcion+","+raiz.nombre
-        if raiz.id<id:
-            return self.retornarDesripcion(raiz.derecho, id)
-        if raiz.id>id:
-            return self.retornarDesripcion(raiz.izquierdo, id)
+        if iniciarRa.id == id:
+            return iniciarRa.descripcion+","+iniciarRa.nombre
+        if iniciarRa.id<id:
+            return self.retornarDesripcion(iniciarRa.derecho, id)
+        if iniciarRa.id>id:
+            return self.retornarDesripcion(iniciarRa.izquierdo, id)
+
 
 
 class Principal2:
     b = AVL()
-    b.insertarActivo()
-    b.graficarAVL()
-    b.graficarNodoAVL()
+
+    a = NodoAvl("samuel4")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("samuel6")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("samuel1")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("samuel7")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("samuel21")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("samuel3")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("samuel55")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+
+    a = NodoAvl("alberto43")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("perez")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+    a = NodoAvl("jimenez")
+    b.cabeza = b.insertarActivo(a,b.cabeza)
+    b.cabeza, val = b.BalanceFactor(b.cabeza)
+    b.cabeza = b.ArbolCorre(b.cabeza)
+
+
+    b.graficarAVL(b.cabeza)
+
+    print "casa"
