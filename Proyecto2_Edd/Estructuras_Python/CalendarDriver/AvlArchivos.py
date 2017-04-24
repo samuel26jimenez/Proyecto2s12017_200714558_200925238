@@ -241,7 +241,7 @@ class AVL:
 
     def graficarAVL(self, iniciarRa):
         if iniciarRa==None:
-            print"esta vacio :("
+            print("esta vacio :(")
             return
         file = open("avl.dot", "w")
         file.write("digraph G{\n")
@@ -300,7 +300,7 @@ class AVL:
             cadena+=","+self.retornarIzDer(iniciarRa.derecho)
         if iniciarRa.izquierdo:
             cadena+=","+self.retornarIzDer(iniciarRa.izquierdo)
-        print cadena
+        print (cadena)
         return cadena
 
 
@@ -378,4 +378,4 @@ class Principal2:
 
     b.graficarAVL(b.cabeza)
 
-    print "casa"
+    print ("casa")

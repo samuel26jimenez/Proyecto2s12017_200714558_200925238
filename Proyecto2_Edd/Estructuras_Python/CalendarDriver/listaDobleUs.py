@@ -85,7 +85,7 @@ class Metodo_Lista:
 
     def _Eliminar_N(self, cad_ena):
         if self.esVacio() == True:
-            print "Lista Vacia"
+            print ("Lista Vacia")
         else:
             self.borr = Lista_Nodo
             self.borr = self.ini
@@ -94,7 +94,7 @@ class Metodo_Lista:
                 self.aux = self.borr
                 self.borr = self.borr.Lsig
             if self.borr == None:
-                print "No Existe Dato"
+                print ("No Existe Dato")
             else:
                 if self.borr.cad_tecla == cad_ena:
                     if self.borr == self.ini:
@@ -113,7 +113,7 @@ class Metodo_Lista:
     def _Mostrar(self):
         self.temporal = self.ini
         while(self.temporal != None):
-            print self.temporal.get_cadTecla()
+            print (self.temporal.get_cadTecla())
             self.temporal = self.temporal.Lsig
 
 
@@ -127,9 +127,9 @@ class Metodo_Lista:
                 aux = aux.Lsig
 
             if  aux != None and aux.get_cadTecla() == cadena:
-                print "cadena: "+ aux.get_cadTecla()
+                print ("cadena: "+ aux.get_cadTecla())
             else:
-                print "Cadena No Existe"
+                print ("Cadena No Existe")
 
 
     def grafica_Lista(self):
