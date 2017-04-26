@@ -930,41 +930,186 @@ class ArbolB:
                 raiz.Rama1.Rama0 = raiz.Rama0.Rama0
             raiz.Rama0.Cuentas = raiz.Rama0.Cuentas -1
 
+    def MoverIzq(self, raiz, pos):
+        i = 0
+        posv = 0
+        if pos == 4:
+            posv = raiz.Rama4.Cuentas + 1
+            raiz.Rama4.Cuentas = raiz.Rama4.Cuentas +1
+            if (raiz.Rama3.Cuentas -1) == 3:
+                raiz.Rama3.Clave3 = raiz.Clave3
+                raiz.Rama3.Rama4 = raiz.Rama4.Rama0
+            if (raiz.Rama3.Cuentas -1) == 2:
+                raiz.Rama3.Clave2 = raiz.Clave3
+                raiz.Rama3.Rama2 = raiz.Rama4.Rama0
+            if (raiz.Rama3.Cuentas -1) == 1:
+                raiz.Rama3.Clave1 = raiz.Clave3
+                raiz.Rama3.Rama1 = raiz.Rama4.Rama0
+            if (raiz.Rama3.Cuentas -1) == 0:
+                raiz.Rama3.Clave0 = raiz.Clave3
+                raiz.Rama3.Rama0 = raiz.Rama4.Rama0
+            raiz.Clave3 = raiz.Rama4.Clave0
+            raiz.Rama4.Rama0 = raiz.Rama4.Rama1
+            raiz.Rama4.Cuentas = raiz.Rama4.Cuentas -1
+            i =1
+        if pos == 3:
+            posv = raiz.Rama3.Cuentas + 1
+            raiz.Rama3.Cuentas = raiz.Rama3.Cuentas +1
+            if (raiz.Rama2.Cuentas -1) == 3:
+                raiz.Rama2.Clave3 = raiz.Clave2
+                raiz.Rama2.Rama4 = raiz.Rama3.Rama0
+            if (raiz.Rama2.Cuentas -1) == 2:
+                raiz.Rama2.Clave2 = raiz.Clave2
+                raiz.Rama2.Rama2 = raiz.Rama3.Rama0
+            if (raiz.Rama2.Cuentas -1) == 1:
+                raiz.Rama2.Clave1 = raiz.Clave2
+                raiz.Rama2.Rama1 = raiz.Rama3.Rama0
+            if (raiz.Rama2.Cuentas -1) == 0:
+                raiz.Rama2.Clave0 = raiz.Clave2
+                raiz.Rama2.Rama0 = raiz.Rama3.Rama0
+            raiz.Clave2 = raiz.Rama3.Clave0
+            raiz.Rama3.Rama0 = raiz.Rama3.Rama1
+            raiz.Rama3.Cuentas = raiz.Rama3.Cuentas -1
+            i =1
+        if pos == 2:
+            posv = raiz.Rama2.Cuentas +1
+            raiz.Rama2.Cuentas = raiz.Rama.Cuentas +1
+            if (raiz.Rama1.Cuentas -1)  == 3:
+                raiz.Rama1.Clave3 = raiz.Clave1
+                raiz.Rama1.Rama4 = raiz.Rama2.Rama0
+            if (raiz.Rama1.Cuentas -1) == 2:
+                raiz.Rama1.Clave2 = raiz.Clave1
+                raiz.Rama1.Rama2 = raiz.Rama2.Rama0
+            if (raiz.Rama1.Cuentas -1) == 1:
+                raiz.Rama1.Clave1 = raiz.Clave1
+                raiz.Rama1.Rama1 = raiz.Rama2.Rama0
+            if (raiz.Rama1.Cuentas -1) == 0:
+                raiz.Rama1.Clave0 = raiz.Clave1
+                raiz.Rama1.Rama0 = raiz.Rama2.Rama0
+            raiz.Clave1 = raiz.Rama2.Clave0
+            raiz.Rama2.Rama0 = raiz.Rama2.Rama1
+            raiz.Rama2.Cuentas = raiz.Rama2.Cuentas -1
+            i =1
+        if pos == 1:
+            posv = raiz.Rama1.Cuentas +1
+            raiz.Rama1.Cuentas = raiz.Rama1.Cuentas + 1
+            if (raiz.Rama0.Cuentas -1) == 3:
+                raiz.Rama0.Clave3 = raiz.Clave1
+                raiz.Rama0.Rama4 = raiz.Rama1.Rama0
+            if (raiz.Rama0.Cuentas -1) == 2:
+                raiz.Rama0.Clave2 = raiz.Clave1
+                raiz.Rama0.Rama2 = raiz.Rama1.Rama0
+            if (raiz.Rama0.Cuentas -1) == 1:
+                raiz.Rama0.Clave1 = raiz.Clave1
+                raiz.Rama0.Rama1 = raiz.Rama1.Rama0
+            if (raiz.Rama0.Cuentas -1) == 0:
+                raiz.Rama0.Clave0 = raiz.Clave1
+                raiz.Rama0.Rama0 = raiz.Rama1.Rama0
+            raiz.Clave0 = raiz.Rama1.Clave0
+            raiz.Rama1.Rama0 = raiz.Rama1.Rama1
+            raiz.Rama1.Cuentas = raiz.Rama1.Cuentas -1
+            i =1
+        if pos == 0:
+            os.write("Salta -> jmp")
 
+        while i != posv:
+            if pos == 0:
+                if i == 1:
+                    raiz.Rama0.Clave0 = raiz.Rama0.Clave1
+                    raiz.Rama0.Rama1 = raiz.Rama0.Rama2
+                if i == 2:
+                    raiz.Rama0.Clave1 = raiz.Rama0.Clave2
+                    raiz.Rama0.Rama2 = raiz.Rama0.Rama3
+                if i == 3:
+                    raiz.Rama0.Clave2 = raiz.Rama0.Clave3
+                    raiz.Rama0.Rama3 = raiz.Rama0.Rama4
+            if pos == 1:
+                if i == 1:
+                    raiz.Rama1.Clave0 = raiz.Rama1.Clave1
+                    raiz.Rama1.Rama1 = raiz.Rama1.Rama3
+                if i == 2:
+                    raiz.Rama1.Clave1 = raiz.Rama1.Clave2
+                    raiz.Rama1.Rama2 = raiz.Rama1.Rama3
+                if i == 3:
+                    raiz.Rama1.Clave1 = raiz.Rama1.Clave2
+                    raiz.Rama1.Rama3 = raiz.Rama1.Rama4
+            if pos == 2:
+                if i == 1:
+                    raiz.Rama2.Clave0 = raiz.Rama2.Clave1
+                    raiz.Rama2.Rama1 = raiz.Rama2.Rama2
+                if i == 2:
+                    raiz.Rama2.Clave1 = raiz.Rama2.Clave2
+                    raiz.Rama2.Rama2 = raiz.Rama2.Rama3
+                if i == 3:
+                    raiz.Rama2.Clave2 = raiz.Rama2.Clave3
+                    raiz.Rama2.Rama3 = raiz.Rama2.Rama4
+            if pos == 3:
+                if i == 1:
+                    raiz.Rama3.Clave0 = raiz.Rama3.Clave1
+                    raiz.Rama3.Rama1 = raiz.Rama3.Rama2
+                if i == 2:
+                    raiz.Rama3.Clave1 = raiz.Rama3.Clave2
+                    raiz.Rama3.Rama2 = raiz.Rama3.Rama3
+                if i == 3:
+                    raiz.Rama3.Clave2 = raiz.Rama3.Clave3
+                    raiz.Rama3.Rama3 = raiz.Rama3.Rama4
+            if pos == 4:
+                if i == 1:
+                    raiz.Rama4.Clave0 = raiz.Rama4.Clave1
+                    raiz.Rama4.Rama1 = raiz.Rama4.Rama2
+                if i == 2:
+                    raiz.Rama4.Clave1 = raiz.Rama4.Clave2
+                    raiz.Rama4.Rama2 = raiz.Rama4.Rama3
+                if i == 3:
+                    raiz.Rama4.Clave2 = raiz.Rama4.Clave3
+                    raiz.Rama4.Rama3 = raiz.Rama4.Rama4
+            i = i +1
 
+    def Quitar(self, raiz, pos):
+        j = pos +1
+        while(j != raiz.self.Cuentas +1):
+            if j == 4:
+                raiz.Clave2 = raiz.Clave3
+                raiz.Rama3 = raiz.Rama4
+            if j == 3:
+                raiz.Clave1 = raiz.Clave2
+                raiz.Rama2 = raiz.Rama3
+            if j == 2:
+                raiz.Clave0 = raiz.Clave1
+                raiz.Rama1 = raiz.Rama2
+            if j == 1:
+                break
+            if j == 0:
+                break
+        j = j+1
+        raiz.Cuentas = raiz.Cuentas -1
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    def Restablecer(self, raiz, pos):
+        if pos > 0:
+            if pos == 4:
+                if raiz.Rama3.Cuentas > 2:
+                    self.MoverDer(raiz, pos)
+                else:
+                    self.Combina(raiz, pos)
+            if pos == 3:
+                if raiz.Rama2.Cuentas > 2:
+                    self.MoverDer(raiz, pos)
+                else:
+                    self.Combina(raiz, pos)
+            if pos == 2:
+                if raiz.Rama1.Cuentas > 2:
+                    self.MoverDer(raiz, pos)
+                else:
+                    self.Combina(raiz, pos)
+            if pos == 1:
+                if raiz.Rama0.Cuentas > 2:
+                    self.MoverDer(raiz, pos)
+                else:
+                    self.Combina(raiz, pos)
+        elif raiz.Rama1.Cuentas > 2:
+            self.MoverIzq(raiz, 1)
+        else:
+            self.Combina(raiz, 1)
 
     def Vacio(self, raiz):
         return raiz is None or raiz.a.Cuentas == 0
