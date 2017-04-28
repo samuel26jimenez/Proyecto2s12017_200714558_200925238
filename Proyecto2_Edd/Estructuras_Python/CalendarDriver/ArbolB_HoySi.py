@@ -1,5 +1,8 @@
+#import lista as lista
+
 __author__ = 'Samuel'
 import os
+#import os.Collections.Generic
 #---------------- Determino Orden 5 por cada nodo ------
 
 
@@ -29,9 +32,9 @@ class NodoProyec:
 
 #--------------- Estructura  del B interno metodo -------
 class ArbolB:
-    a = Bnodo()
-    Xder = Bnodo()
-    Xizq = Bnodo()
+    a = Bnodo
+    Xder = Bnodo
+    Xizq = Bnodo
     global x #tipo de NodoProyec
     global Xr #tipo de Bnodo
 
@@ -49,9 +52,11 @@ class ArbolB:
         self.Xder = self.Xizq = None
         X = None
         Xr = None
+        self.p = None
 
-    def Inserta(self, clave, p):
-        self.Insertaa(clave, p)
+    def Inserta(self, clave):
+        self.Insertaa(clave, self.p)
+
 
     def Insertaa(self, clave, raiz ): #NodoPr Bnodo
         self.Empujar(clave,raiz)
@@ -1113,6 +1118,447 @@ class ArbolB:
 
     def Vacio(self, raiz):
         return raiz is None or raiz.a.Cuentas == 0
+
+#---------------- Grafico del Arbol B ---------------
+class Graficar_Arbol_B:
+    def __init__(self):
+        self.lista = []
+        self.desktop = None
+        self.contador = 0
+        self.ruta_file = ""
+        self.val = 0
+        self.raiz = None
+
+    def Graficar_File(self, nodo): #Bnodo
+        self.a = ArbolB()
+        self.val = 0
+        global archivo
+        if self.a.Vacio(self.raiz) == True:
+
+            return
+        else:
+            archivo = open("grafica_BCarpeta.dot", "W")
+            archivo.write("\ndigraph G{\r\n node [shape=record] ;\n")
+            Graficar_Arbol_B()
+            self.Graficar_B(nodo)
+
+            archivo.write("}")
+            os.system("dot -Tpng grafica_BCarpeta.dot > grafica_BCarpeta.png")
+
+
+    def Graficar_B(self, nodo):
+        k =0
+        c =0
+        archivo.write( "Nodo" + str(self.val) + "[label=\"<PO>" )
+        while(c < 4):
+            if c == 0:
+                if (nodo.Clave0 == None):
+                    break
+            elif c == 1:
+                if (nodo.Clave1 == None):
+                    break
+            elif c == 2:
+                if (nodo.Clave2 == None):
+                    break
+            elif c == 3:
+                if (nodo.Clave3 == None):
+                    break
+            if c == 0:
+                archivo.write("|" + nodo.Clave0.Carpeta)
+                archivo.write("|<P" + (c+1) + ">")
+                break
+            if c == 1:
+                archivo.write("|" + nodo.Clave1.Carpeta)
+                archivo.write("|<p" + (c+1) + ">")
+                break
+            if c == 2:
+                archivo.write("|" + nodo.Clave2.Carpeta)
+                archivo.write("|<p" + (c+1) + ">")
+                break
+            if c == 3:
+                archivo.write("|" + nodo.Clave3.Carpeta)
+                archivo.write("|<p" + (c+1) + ">")
+                break
+            c = c+1
+
+        archivo.write("\"];\n")
+        pasa = "Nodo" +  self.val
+
+        while(k < 5 and nodo.Cuentas >= k):
+            if k == 0:
+                if nodo.Rama0 == None:
+                    return
+                if nodo.Rama0.Cuentas == 0:
+                    return
+            elif k == 1:
+                if nodo.Rama1 == None:
+                    return
+                if nodo.RAma1.Cuentas == 0:
+                    return
+            elif k == 2:
+                if nodo.Rama2 == None:
+                    return
+                if nodo.Rama2.Cuentas == 0:
+                    return
+            elif k == 3:
+                if nodo.Rama3 == None:
+                    return
+                if nodo.Rama3.Cuentas == 0:
+                    return
+            elif k == 4:
+                if nodo.Rama4 == None:
+                    return
+                if nodo.Rama4.Cuentas == 0:
+                    return
+            self.val = self.val + 1
+            archivo.write(pasa + ":P" + k + " -> " + "Nodo" + self.val + ";\n")
+            if k == 0:
+                self.RecursivoGrafica(nodo.Rama0)
+                break
+            if k == 1:
+                self.RecursivoGrafica(nodo.Rama1)
+                break
+            if k == 2:
+                self.RecursivoGrafica(nodo.Rama2)
+                break
+            if k == 3:
+                self.RecursivoGrafica(nodo.Rama3)
+                break
+            if k == 4:
+                self.RecursivoGrafica(nodo.Rama4)
+                break
+            k = k+1
+
+
+
+    def RecursivoGrafica(self, nodo):
+        k = 0
+        c = 0
+        archivo.write("Nodo" + self.val  + "[label=\<PO>")
+
+        while (c < 4):
+            if c != nodo.Cuentas and nodo.Cuentas != 0:
+                if (c == 0):
+                    if (nodo.Clave0 == None):
+                        break
+                elif (c == 1):
+                    if (nodo.Clave1 == None):
+                        break
+                elif (c == 2):
+                    if (nodo.Clave2 == None):
+                        break
+                elif (c == 3):
+                    if (nodo.Clave3 == None):
+                        break
+
+                if c == 0:
+                    archivo.write("|" + nodo.Clave0.Carpeta)
+                    archivo.write("|<P" + (c+1) + ">")
+                    break
+                if c == 1:
+                    archivo.write("|" + nodo.Clave1.Carpeta)
+                    archivo.write("|<P"  + (c+1) + ">")
+                    break
+                if c == 2:
+                    archivo.write("|" + nodo.Clave2.Carpeta)
+                    archivo.write("|<P" + (c+1) + ">")
+                    break
+                if c == 3:
+                    archivo.write("|" + nodo.Clave3.Carpeta)
+                    archivo.write("|<P" + (c+1) + ">")
+                    break
+                c = c+1
+
+            else:
+                break
+        archivo.write("\"];\n")
+        self.pasa = "Nodo" + self.val
+        while k < 5 and nodo.Cuentas  >= k:
+            if k == 0:
+                if nodo.Rama0 == None:
+                    return
+                if nodo.Rama0.Cuentas == 0:
+                    return
+            elif (k == 1):
+                if nodo.Rama1 == None:
+                    return
+                if nodo.Rama1.Cuentas == 0:
+                    return
+            elif (k == 2):
+                if nodo.Rama2 == None:
+                    return
+                if nodo.Rama2.Cuentas == 0:
+                    return
+            elif (k== 3):
+                if nodo.Rama3 == None:
+                    return
+                if nodo.Rama3.Cuentas == 0:
+                    return
+            elif (k== 4):
+                if nodo.Rama4 == None:
+                    return
+                if nodo.Rama4.Cuentas == 0:
+                    return
+
+            self.val = self.val + 1
+            archivo.write(self.pasa + ":P" + k + " -> " + "Nodo" + self.val + ";\n")
+            if k == 0:
+                self.RecursivoGrafica(nodo.Rama0)
+                break
+            if k == 1:
+                self.RecursivoGrafica(nodo.Rama1)
+                break
+            if k == 2:
+                self.RecursivoGrafica(nodo.Rama2)
+                break
+            if k == 3:
+                self.RecursivoGrafica(nodo.Rama3)
+                break
+            if k == 4:
+                self.RecursivoGrafica(nodo.Rama4)
+                break
+            k = k+1
+
+    #Falta Graficar_FileII(usuario, dpto, nodo )
+
+    global nodoB
+    def GraficarListadoB(self, nodo, carpeta):
+        k = 0
+        c = 0
+        while (c < 4):
+            if c == 0:
+                if nodo.Clave0 == None:
+                    break
+            elif c == 1:
+                if nodo.Clave1 == None:
+                    break
+            elif c == 2:
+                if nodo.Clave2 == None:
+                    break
+            elif  c == 3:
+                if nodo.Clave3 == None:
+                    break
+            if c == 0:
+                if carpeta.Equals(nodo.Clave0.Carpeta):
+                    archivo.write("Node" + str(self.nodoB) + "[label=\"" + nodo.Clave0.Carpeta + "\", shape=\"box\", style=filled ];"  )
+                    self.lista.append(nodo.Clave0.Carpeta)
+                    self.nodoB = self.nodoB +1
+                    break
+            if c == 1:
+                if carpeta.Equals(nodo.Clave1.Carpeta):
+                    archivo.write("Node" + str(self.nodoB) + "[label=\"" + nodo.Clave1.Carpeta)
+                    archivo.write("\", shape=\"box\", style=filled ];")
+                    self.lista.append(nodo.Clave1.Carpeta)
+                    self.nodoB = self.nodoB +1
+                    break
+            if c == 2:
+                if carpeta.Equals(nodo.Clave2.Carpeta):
+                    archivo.write("Node" + str(self.nodoB) + "[label=\"" + nodo.Clave2.Carpeta)
+                    archivo.write("\", shape=\"box\", style=filled ];")
+                    self.lista.append(nodo.Clave2.Carpeta)
+                    self.nodoB = self.nodoB + 1
+                    break
+            if c == 3:
+                if carpeta.Equals(nodo.Clave3.Carpeta):
+                    archivo.write("Node" + str(self.nodoB) + "[label=\"" + nodo.Clave3.Carpeta)
+                    archivo.write("\", shape=\"box\", style=filled];")
+                    self.lista.append(nodo.Clave3.Carpeta)
+                    self.nodoB = self.nodoB +1
+                    break
+            c = c+1
+        pasa = "Nodo" + self.val
+
+        while(k < 5 and nodo.Cuentas >= k):
+            if k == 0:
+                if (nodo.Rama0 == None):
+                    return
+                if (nodo.Rama0 == None):
+                    return
+            elif k == 1:
+                if (nodo.Rama1 == None):
+                    return
+                if (nodo.Rama1.Cuentas == 0):
+                    return
+            elif k == 2:
+                if (nodo.Rama2 == None):
+                    return
+                if (nodo.Rama2.Cuentas == 0):
+                    return
+            elif (k == 3):
+                if (nodo.Rama3 == None):
+                    return
+                if (nodo.Rama3.Cuentas == 0):
+                    return
+            elif (k == 4):
+                if (nodo.Rama4 == None):
+                    break
+                if (nodo.Rama4.Cuentas == 0):
+                    return
+
+            val = val +1
+            if k == 0:
+                self.RecursivoGrafica(carpeta, nodo.Rama0)
+                break
+            if k == 1:
+                self.RecursivoGrafica(carpeta, nodo.Rama1)
+                break
+            if k == 2:
+                self.RecursivoGrafica(carpeta, nodo.Rama2)
+                break
+            if k == 3:
+                self.RecursivoGrafica(carpeta, nodo.Rama3)
+                break
+            if k == 4:
+                self.RecursivoGrafica(carpeta, nodo.Rama4)
+                break
+            k = k +1
+
+
+    def RecursivoListado(self, carpeta, nodo):
+        k = 0
+        c = 0
+        while (c < 4):
+            if (c != nodo.Cuentas and nodo.Cuentas != 0):
+                if c == 0:
+                    if nodo.Clave0 == None:
+                        break
+                elif c == 1:
+                    if nodo.Clave1 == None:
+                        break
+                elif c == 2:
+                    if nodo.Clave2 == None:
+                        break
+                elif c == 3:
+                    if nodo.Clave3 == None:
+                        break
+                if c == 0:
+                    if carpeta.Equals(nodo.Clave0.Carpeta):
+                        archivo.write("Node" +str(self.nodoB) + "[label=\"" + nodo.Clave0.Carpeta)
+                        archivo.write("\", shape=\"box\", style=filled ];")
+                        self.lista.append(nodo.Clave0.Carpeta)
+                        self.nodoB = self.nodoB +1
+                        break
+                if c == 1:
+                    if carpeta.Equals(nodo.Clave1.Carpeta):
+                        archivo.write("Node" +  str(self.nodoB) + "[label=\"" + nodo.Clave1.Carpeta)
+                        archivo.write("\", shape=\"box\", style=filled];")
+                        self.lista.append(nodo.Clave1.Carpeta)
+                        self.nodoB = self.nodoB +1
+                        break
+                if c == 2:
+                    if carpeta.Equals(nodo.Clave2.Carpeta):
+                        archivo.write("Node"  + str(self.nodoB) +  "[label=\"" + nodo.Clave2.Carpeta)
+                        archivo.write("\", shape=\"box\", style=filled];")
+                        self.lista.append(nodo.Clave2.Carpeta)
+                        self.nodoB = self.nodoB +1
+                        break
+                if c == 3:
+                    if carpeta.Equals(nodo.Clave3.Carpeta):
+                        archivo.write("Node" +str(self.nodoB) + "[label=\"" + nodo.Clave3.Carpeta)
+                        archivo.write("\", shape=\"box\", style=filled];")
+                        self.lista.append(nodo.Clave3.Carpeta)
+                        self.nodoB = self.nodoB +1
+                        break
+                c= c+1
+
+            else:
+                break
+
+        while (k < 5 and nodo.Cuentas >= k):
+            if (k == 0):
+                if (nodo.Rama0 == None):
+                    return
+                if (nodo.Rama0.Cuentas == 0):
+                    return
+            elif (k == 1):
+               if (nodo.Rama1 == None):
+                   return
+               if (nodo.Ram1.Cuentas == 0):
+                   return
+            elif (k == 2):
+                if nodo.Rama2 == None:
+                    return
+                if nodo.Rama2.Cuentas == 0:
+                    return
+            elif (k == 3):
+                if (nodo.Rama3 == None):
+                    return
+                if (nodo.Rama3.Cuentas == 0):
+                    return
+            elif (k == 4):
+                if (nodo.Rama4 == None):
+                    return
+                if (nodo.Rama4.Cuentas == 0):
+                    return
+
+            self.val = self.val +1
+            if k == 0:
+                self.RecursivoListado(carpeta, nodo.Rama0)
+                break
+            if k == 1:
+                self.RecursivoListado(carpeta, nodo.Rama1)
+                break
+            if k == 2:
+                self.RecursivoListado(carpeta, nodo.Rama2)
+                break
+            if k == 3:
+                self.RecursivoListado(carpeta, nodo.Rama3)
+                break
+            if k == 4:
+                self.RecursivoListado(carpeta, nodo.Rama4)
+                break
+            k = k+1
+
+class Principal:
+    x = ArbolB()
+    #x.Inserta("carpeta1")
+    #x.Inserta("carpeta2")
+    #x.Inserta("carpeta3")
+    #x.Inserta("carpeta4")
+    y = Graficar_Arbol_B()
+    y.Graficar_File((x.Inserta("carpeta5")))
+    y.Graficar_File((x.Inserta("carpeta6")))
+    y.Graficar_File((x.Inserta("carpeta7")))
+    y.Graficar_File((x.Inserta("carpeta8")))
+    y.Graficar_File((x.Inserta("carpeta9")))
+    y.Graficar_File((x.Inserta("carpeta10")))
+    print("Hola")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
