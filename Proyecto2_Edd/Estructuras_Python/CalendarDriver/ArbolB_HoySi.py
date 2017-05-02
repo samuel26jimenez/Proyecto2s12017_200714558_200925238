@@ -24,7 +24,6 @@ class NodoProyec:
 
 #--------------- Estructura  del B interno metodo -------
 class ArbolB:
-
     def __init__(self):
         self.p = Bnodo()
         self.Xder = Bnodo()
@@ -54,7 +53,6 @@ class ArbolB:
         self.Esta = False
 
         if self.Vacio(raiz):
-            #self.EmpA = True
             self.EmpA = True
             self.X = clave
             self.Xr = None
@@ -67,8 +65,10 @@ class ArbolB:
             else:
                 if k == 4:
                     self.Empujar(clave, raiz.Rama4)
+
                 elif k == 3:
                     self.Empujar(clave, raiz.Rama3)
+
                 elif k == 2:
                     self.Empujar(clave, raiz.Rama2)
                 elif k == 1:
@@ -103,17 +103,21 @@ class ArbolB:
                 if vale == 1:
                     s.Clave1 = Raiz.Clave3
                     s.Rama2 = Raiz.Rama4
+                    break
                 elif vale == 0:
                     s.Clave0 = Raiz.Clave2
                     s.Rama1 = Raiz.Rama3
+                    break
                 else:
                     #os.write("Sin Caso")
                     print("finalizo")
-
+                    break
             elif Posmda == 3:
                 if vale == 0:
                     s.Clave0 = Raiz.Clave3
                     s.Rama1 = Raiz.Rama4
+                else:
+                    break
             pos+=1
 
         s.Cuentas = 4 - Posmda
@@ -137,6 +141,7 @@ class ArbolB:
         vale = Raiz.Cuentas
         if vale == 4:
             s.Rama0 = Raiz.Rama4
+
         elif vale == 3:
             s.Rama0 = Raiz.Rama3
         elif vale == 2:
@@ -215,7 +220,7 @@ class ArbolB:
     def Miembro(self, clave, raiz):
         si  = False
         j = 0
-        if self.Vacio(self.p):
+        if self.Vacio(self.p) == False: #<----Aqui tengo duda
             if clave.Carpeta.CompareTo(raiz.Clave0.Carpeta) < 0:
                 si = False
                 j = 0
@@ -223,7 +228,7 @@ class ArbolB:
                 j = raiz.Cuentas
                 for ii in [0,j]:
                     if raiz.Clave3 != None and ii == 4:
-                        if clave.getCarpeta() ==raiz.Clave3.getCarpeta() and j > 1:
+                        if clave.getCarpeta() == raiz.Clave3.getCarpeta() and j > 1:
                             j -= 1
                     if raiz.Clave2 != None and ii == 3:
                         if clave.getCarpeta() == raiz.Clave2.getCarpeta() and j > 1:
@@ -250,26 +255,29 @@ class ArbolB:
             if c == 0:
                 if p.Clave0 == None:
                     break
-            elif c ==1:
+            elif c == 1:
                 if p.Clave1 == None:
                     break
-                elif c == 2:
-                    if p.Clave2 == None:
-                        break
-                    elif c == 3:
-                        if p.Clave3 == None:
-                            break
+            elif c == 2:
+                if p.Clave2 == None:
+                    break
+            elif c == 3:
+                if p.Clave3 == None:
+                    break
             if c == 0:
                 if p.Clave0.getCarpeta() == identi:
                     os.write("Encontro1")
                     break
-                elif p.Clave1.getCarpeta() == identi:
+            elif c == 1:
+                if p.Clave1.getCarpeta() == identi:
                     os.write("Encontro2")
                     break
-                elif p.Clave2.getCarpeta() == identi:
+            elif c == 2:
+                if p.Clave2.getCarpeta() == identi:
                     os.write("Encontro3")
                     break
-                elif p.Clave3.getCarpeta() == identi:
+            elif c == 3:
+                if p.Clave3.getCarpeta() == identi:
                     os.write("Encontro4")
                     break
             c += 1
@@ -339,16 +347,16 @@ class ArbolB:
                     if nodo.Clave0.getCarpeta() == identi:
                         os.write("Caso 0")
                         break
-                if c == 1:
+                elif c == 1:
                     if nodo.Clave1.getCarpeta()== identi:
                         os.write("Caso 1")
                         break
-                if c == 2:
+                elif c == 2:
                     if nodo.Clave2.getCarpeta() == identi:
                         os.write("Caso 2")
                         break
-                if c == 3:
-                    if nodo.Clave.getCarpeta() == identi:
+                elif c == 3:
+                    if nodo.Clave3.getCarpeta() == identi:
                         os.write("Caso 3")
                         break
                 c += 1
@@ -360,26 +368,26 @@ class ArbolB:
                     return
                 if nodo.Rama0.Cuentas == 0:
                     return
-                elif k == 1:
-                    if nodo.Rama1 == None:
-                        return
-                    if nodo.Rama1.Cuentas == 0:
-                        return
-                elif k == 2:
-                    if nodo.Rama2 == None:
-                        return
-                    if nodo.Rama2.Cuentas == 0:
-                        return
-                elif k == 3:
-                    if nodo.Rama3 == None:
-                        return
-                    if nodo.Rama3.Cuentas == 0:
-                        return
-                elif k == 4:
-                    if nodo.Rama4 == None:
-                        return
-                    if nodo.Rama4.Cuentas == 0:
-                        return
+            elif k == 1:
+                if nodo.Rama1 == None:
+                    return
+                if nodo.Rama1.Cuentas == 0:
+                    return
+            elif k == 2:
+                if nodo.Rama2 == None:
+                    return
+                if nodo.Rama2.Cuentas == 0:
+                    return
+            elif k == 3:
+                if nodo.Rama3 == None:
+                    return
+                if nodo.Rama3.Cuentas == 0:
+                    return
+            elif k == 4: # aqui voy
+                if nodo.Rama4 == None:
+                    return
+                if nodo.Rama4.Cuentas == 0:
+                    return
 
                 self.val +=1
                 if k == 0:
@@ -407,7 +415,7 @@ class ArbolB:
 
         k = 0
         self.Esta = False
-        if self.Vacio(raiz):
+        if self.Vacio(raiz) == False: #<--------------- Aqui tengo duda
             k = self.BuscarNodo_Val(clave, raiz)
             if self.Esta:
                 if k == 4:
@@ -439,6 +447,9 @@ class ArbolB:
                     self.nodo_ = self.Buscar_Posicion(clave, raiz.Rama0)
             return self.nodo_
 
+
+
+
     def BuscarNodo_Val(self, clave, raiz):
         j = 0
         if clave.CompareTo(raiz.Clave0.getCarpeta()) < 0:
@@ -446,7 +457,7 @@ class ArbolB:
             j = 0
         else:
             j = raiz.Cuentas
-            for ii in [0,j]:
+            for ii in [j, 0]: #<------------- Aqui tengo duda
                 if raiz.Clave3 != None and ii ==4:
                     if clave == raiz.Clave3.getCarpeta() and j > 1:
                         j -= 1
@@ -462,16 +473,20 @@ class ArbolB:
             if j == 4:
                 if raiz.Clave3 != None:
                     self.Esta = (clave == raiz.Clave3.getCarpeta())
-            if j == 3:
+            elif j == 3:
                 if raiz.Clave2 != None:
                     self.Esta = (clave == raiz.Clave2.getCarpeta())
-            if j == 2:
+            elif j == 2:
                 if raiz.Clave1 != None:
                     self.Esta = (clave == raiz.Clave1.getCarpeta())
-            if j == 1:
+            elif j == 1:
                 if raiz.Clave0 != None:
                     self.Esta = (clave == raiz.Clave0.getCarpeta())
         return j
+
+
+
+
 
     def Eliminar(self, clave):
         if self.Vacio(self.p):  # Falta agg un parametro
@@ -484,15 +499,15 @@ class ArbolB:
             self.EliminarRegistro(Raiz, clave)
         except(Exception ):
             self.Esta = False
-            if not self.Esta:
-                os.write("Esta")
+            if self.Esta == False: # <--------- Aqui tengo duda
+                print("Esta")
             else:
                 if self.Raiz.Cuentas == 0:
                     Raiz = self.Raiz.Rama0
                 self.p = Raiz
 
     def EliminarRegistro(self, raiz, c):
-        pos = 0
+        self.pos = 0
         #NodoProyec sucesor
         if self.Vacio(raiz):
             Esta = False
@@ -501,93 +516,95 @@ class ArbolB:
             if self.Esta:
                 if (pos-1) == 4:
                     if (self.Vacio(self.raiz.Rama4)):
-                        self.Quitar(self.raiz, self.pos)
+                        self.Quitar(self.raiz, pos)
                     else:
-                        self.Sucesor(raiz, self.pos)
+                        self.Sucesor(raiz, pos)
                         if pos == 4:
                             self.EliminarRegistro(raiz.Rama4, raiz.Clave3)
-                        if pos == 3:
+                        elif pos == 3:
                             self.EliminarRegistro(raiz.Rama3, raiz.Clave2)
-                        if pos == 2:
+                        elif pos == 2:
                             self.EliminarRegistro(raiz.Rama2, raiz.Clave1)
-                        if pos == 1:
+                        elif pos == 1:
                             self.EliminarRegistro(raiz.Rama1, raiz.Clave0)
-                if (pos -1) == 3:
+                elif (pos -1) == 3:
                     if self.Vacio(raiz.Rama3):
                         self.Quitar(self.raiz, pos)
                     else:
                         self.Sucesor(raiz, pos)
                         if pos == 4:
                             self.EliminarRegistro(raiz.Rama4, raiz.Clave3)
-                        if pos == 3:
+                        elif pos == 3:
                             self.EliminarRegistro(raiz.Rama3, raiz.Clave2)
-                        if pos == 2:
+                        elif pos == 2:
                             self.EliminarRegistro(raiz.Rama2, raiz.Clave1)
-                        if pos == 1:
+                        elif pos == 1:
                             self.EliminarRegistro(raiz.Rama1, raiz.Clave0)
-                if (pos-1) == 2:
+                elif (pos-1) == 2:
                     if self.Vacio(raiz.Rama2):
                         self.Quitar(self.raiz, pos)
                     else:
                         self.Sucesor(raiz, pos)
                         if pos == 4:
                             self.EliminarRegistro(raiz.Rama4, raiz.Clave3)
-                        if pos == 3:
+                        elif pos == 3:
                             self.EliminarRegistro(raiz.Rama3, raiz.Clave2)
-                        if pos == 2:
+                        elif pos == 2:
                             self.EliminarRegistro(raiz.Rama2, raiz.Clave1)
-                        if pos == 1:
+                        elif pos == 1:
                             self.EliminarRegistro(raiz.Rama1, raiz.Clave0)
-                if (pos-1) == 1:
+                elif (pos-1) == 1:
                     if self.Vacio(raiz.Rama1):
                         self.Quitar(self.raiz, pos)
                     else:
                         self.Sucesor(raiz, pos)
                         if pos == 4:
                             self.EliminarRegistro(raiz.Rama4, raiz.Clave3)
-                        if pos == 3:
+                        elif pos == 3:
                             self.EliminarRegistro(raiz.Rama3, raiz.Clave2)
-                        if pos == 2:
+                        elif pos == 2:
                             self.EliminarRegistro(raiz.Rama2, raiz.Clave1)
-                        if pos == 1:
+                        elif pos == 1:
                             self.EliminarRegistro(raiz.Rama1, raiz.Clave0)
-                if (pos-1) == 0:
+                elif (pos-1) == 0:
                     if self.Vacio(raiz.Rama1):
                         self.Quitar(self.raiz, pos)
                     else:
                         self.Sucesor(raiz, pos)
                         if pos == 4:
                             self.EliminarRegistro(raiz.Rama4, raiz.Clave3)
-                        if pos == 3:
+                        elif pos == 3:
                             self.EliminarRegistro(raiz.Rama3, raiz.Clave2)
-                        if pos == 2:
+                        elif pos == 2:
                             self.EliminarRegistro(raiz.Rama2, raiz.Clave2)
-                        if pos == 1:
+                        elif pos == 1:
                             self.EliminarRegistro(raiz.Rama1, raiz.Clave1)
             else:
                 if pos == 4:
                     self.EliminarRegistro(raiz.Rama4, c)
-                if pos == 3:
+                elif pos == 3:
                     self.EliminarRegistro(raiz.Rama3, c)
-                if pos == 2:
+                elif pos == 2:
                     self.EliminarRegistro(raiz.Rama2, c)
-                if pos == 1:
+                elif pos == 1:
                     self.EliminarRegistro(raiz.Rama1, c)
+                elif pos == 0:
+                    self.EliminarRegistro(raiz.Rama0, c)
 
 
                 if pos == 4:
                     if raiz.Rama4 != None and raiz.Rama4.Cuentas < 2:
                         self.Restablecer(self.raiz, pos)
-                if pos == 3:
+                elif pos == 3:
                     if raiz.Rama3 != None and raiz.Rama3.Cuentas < 2:
                         self.Restablecer(self.raiz, pos)
-                if pos == 2:
+                elif pos == 2:
                     if raiz.Rama2 != None and raiz.Rama2.Cuentas < 2:
                         self.Restablecer(self.raiz, pos)
-                if pos == 1:
+                elif pos == 1:
                     if raiz.Rama1 != None and raiz.Rama1.Cuentas < 2:
                         self.Restablecer(self.raiz, pos)
-                if pos == 0:
+                elif pos == 0:
                     if raiz.Rama0 != None and raiz.Rama0.Cuentas < 2:
                         self.Restablecer(self.raiz, pos)
 
@@ -595,25 +612,25 @@ class ArbolB:
         self.q = None
         if k == 4:
             self.q = raiz.Rama4
-        if k == 3:
+        elif k == 3:
             self.q = raiz.Rama3
-        if k == 2:
+        elif k == 2:
             self.q = raiz.Rama2
-        if k == 1:
+        elif k == 1:
             self.q = raiz.Rama1
-        if k == 0:
+        elif k == 0:
             self.q = raiz.Rama0
 
-        while self.Vacio(self.q.Rama0) != self.Vacio(self.q.Rama0):            # <------------- Con el desigual
+        while self.Vacio(q.Rama0) != False:            # <------------- Con el desigual
             self.q = self.q.Rama0
 
         if k == 4:
             raiz.Clave3 = self.q.Clave0
-        if k == 3:
+        elif k == 3:
             raiz.Clave2 = self.q.Clave0
-        if k == 2:
+        elif k == 2:
             raiz.Clave1 = self.q.Clave0
-        if k == 1:
+        elif k == 1:
             raiz.Clave0 = self.q.Clave0
 
 
@@ -621,69 +638,77 @@ class ArbolB:
         j = 0
         if pos == 4:
             self.Xder = raiz.Rama4
-        if pos == 3:
+        elif pos == 3:
             self.Xder = raiz.Rama3
-        if pos == 2:
+        elif pos == 2:
             self.Xder = raiz.Rama2
-        if pos == 1:
+        elif pos == 1:
             self.Xder = raiz.Rama1
-        if pos == 0:
+        elif pos == 0:
             self.Xder = raiz.Rama0
 
 
-        if (pos - 1):
-            if (pos - 1) == 4:
-                self.Xder = raiz.Rama4
-            if (pos - 1) == 3:
-                self.Xder = raiz.Rama3
-            if (pos - 1) == 2:
-                self.Xder = raiz.Rama2
-            if (pos - 1) == 1:
-                self.Xder = raiz.Rama1
-            if (pos - 1) == 0:
-                self.Xder = raiz.Rama0
+        #if (pos - 1):
+        if (pos - 1) == 4:
+            self.Xder = raiz.Rama4
+        elif (pos - 1) == 3:
+            self.Xder = raiz.Rama3
+        elif (pos - 1) == 2:
+            self.Xder = raiz.Rama2
+        elif (pos - 1) == 1:
+            self.Xder = raiz.Rama1
+        elif (pos - 1) == 0:
+            self.Xder = raiz.Rama0
         self.Xizq.Cuentas += 1
 
-        if self.Xizq.Cuentas - 1:
-            if (self.Xizq.Cuentas -1) == 3:
-                if (pos-1) == 3:
-                    self.Xizq.Clave3 = raiz.Clave3
-                if (pos-1) == 2:
-                    self.Xizq.Clave3 = raiz.Clave2
-                if (pos-1) == 1:
-                    self.Xizq.Clave3 = raiz.Clave1
-                if (pos-1) == 0:
-                    self.Xizq.Clave3 = raiz.Clave0
 
-            if (self.Xizq.Cuentas -1) == 2:
-                if (pos - 1) == 3:
-                    self.Xizq.Clave2 = raiz.Clave3
-                if (pos - 1) == 2:
-                    self.Xizq.Clave2 = raiz.Clave2
-                if (pos - 1) == 1:
-                    self.Xizq.Clave2 = raiz.Clave1
-                if (pos - 1) == 0:
-                    self.Xizq.Clave2 = raiz.Clave0
 
-            if (self.Xizq.Cuentas -1) == 1:
-                if (pos -1) == 3:
-                    self.Xizq.Clave1 = raiz.Clave3
-                if (pos -1) == 2:
-                    self.Xizq.Clave1 = raiz.Clave2
-                if (pos -1) == 1:
-                    self.Xizq.Clave1 = raiz.Clave1
-                if (pos -1) == 0:
-                    self.Xizq.Clave1 = raiz.Clave0
+        #if self.Xizq.Cuentas - 1:
+        if (self.Xizq.Cuentas -1) == 3:
+            if (pos-1) == 3:
+                self.Xizq.Clave3 = raiz.Clave3
+            elif (pos-1) == 2:
+                self.Xizq.Clave3 = raiz.Clave2
+            elif (pos-1) == 1:
+                self.Xizq.Clave3 = raiz.Clave1
+            elif (pos-1) == 0:
+                self.Xizq.Clave3 = raiz.Clave0
 
-            if (self.Xizq.Cuentas -1) == 0:
-                if (pos -1) == 3:
-                    self.Xizq.Clave0 = raiz.Clave3
-                if (pos -1) == 2:
-                    self.Xizq.Clave0 = raiz.Clave2
-                if (pos -1) == 1:
-                    self.Xizq.Clave0 = raiz.Clave1
-                if (pos -1) == 1:
-                    self.Xizq.Clave0 = raiz.Clave0
+        if (self.Xizq.Cuentas -1) == 2:
+            if (pos - 1) == 3:
+                self.Xizq.Clave2 = raiz.Clave3
+            if (pos - 1) == 2:
+                self.Xizq.Clave2 = raiz.Clave2
+            if (pos - 1) == 1:
+                self.Xizq.Clave2 = raiz.Clave1
+            if (pos - 1) == 0:
+                self.Xizq.Clave2 = raiz.Clave0
+
+
+
+        if (self.Xizq.Cuentas -1) == 1:
+            if (pos -1) == 3:
+                self.Xizq.Clave1 = raiz.Clave3
+            if (pos -1) == 2:
+                self.Xizq.Clave1 = raiz.Clave2
+            if (pos -1) == 1:
+                self.Xizq.Clave1 = raiz.Clave1
+            if (pos -1) == 0:
+                self.Xizq.Clave1 = raiz.Clave0
+
+
+
+        if (self.Xizq.Cuentas -1) == 0:
+            if (pos -1) == 3:
+                self.Xizq.Clave0 = raiz.Clave3
+            if (pos -1) == 2:
+                self.Xizq.Clave0 = raiz.Clave2
+            if (pos -1) == 1:
+                self.Xizq.Clave0 = raiz.Clave1
+            if (pos -1) == 1:
+                self.Xizq.Clave0 = raiz.Clave0
+
+
 
         if self.Xizq.Cuentas == 4:
             self.Xizq.Rama4 = self.Xder.Rama0
@@ -712,6 +737,7 @@ class ArbolB:
                 if (j-1) == 0:
                     self.Xizq.Clave3 = self.Xder.Clave0
                     self.Xizq.Rama4 = self.Xder.Rama1
+                break
 
             if (self.Xizq.Cuentas-1) == 2:
                 if (j-1) == 3:
@@ -726,6 +752,7 @@ class ArbolB:
                 if (j-1) == 0:
                     self.Xizq.Clave2 = self.Xder.Clave0
                     self.Xizq.Rama3 = self.Xder.Rama1
+                break
 
             if (self.Xizq.Cuentas-1) == 1:
                 if (pos-1) == 3:
@@ -740,6 +767,7 @@ class ArbolB:
                 if (pos-1) == 0:
                     self.Xizq.Clave1 = self.Xder.Clave0
                     self.Xizq.Rama2 = self.Xder.Rama1
+                break
 
             if (self.Xizq.Cuentas-1) == 0:
                 if (pos -1) == 3:
@@ -754,6 +782,7 @@ class ArbolB:
                 if (pos -1) == 0:
                     self.Xizq.Clave0 = self.Xder.Clave0
                     self.Xizq.Rama1 = self.Xder.Rama1
+                break
             j += 1
         self.Quitar(raiz, pos)
 
@@ -761,176 +790,182 @@ class ArbolB:
         self.i = 0
         if pos == 4:
             self.i = raiz.Rama4.Cuentas
-        if pos == 3:
+        elif pos == 3:
             self.i = raiz.Rama3.Cuentas
-        if pos == 2:
+        elif pos == 2:
             self.i = raiz.Rama2.Cuentas
-        if pos == 1:
+        elif pos == 1:
             self.i = raiz.Rama1.Cuentas
-        if pos == 0:
+        elif pos == 0:
             self.i = raiz.Rama0.Cuentas
+
+            
 
         while self.i != 0:
             if self.i == 3:
                 if pos == 4:
                     raiz.Rama4.Clave3 = raiz.Rama4.Clave2
                     raiz.Rama4.Rama4 = raiz.Rama4.Rama3
-                if pos == 3:
+                elif pos == 3:
                     raiz.Rama3.Clave3 = raiz.Rama3.Clave2
                     raiz.Rama3.Rama4 = raiz.Rama3.Rama3
-                if pos == 2:
+                elif pos == 2:
                     raiz.Rama2.Clave3 = raiz.Rama2.Clave2
                     raiz.Rama2.Rama4 = raiz.Rama2.Rama3
-                if pos == 1:
+                elif pos == 1:
                     raiz.Rama1.Clave3 = raiz.Rama1.Clave2
                     raiz.Rama1.Rama4 = raiz.Rama1.Rama3
-                if pos == 0:
+                elif pos == 0:
                     raiz.Rama0.Clave3 = raiz.Rama0.Clave2
                     raiz.Rama0.Rama4 = raiz.Rama0.Rama3
+                break
 
             if self.i == 2:
                 if pos == 4:
                     raiz.Rama4.Clave2 = raiz.Rama4.Clave1
                     raiz.Rama4.Rama3 = raiz.Rama4.Rama2
-                if pos == 3:
+                elif pos == 3:
                     raiz.Rama3.Clave2 = raiz.Rama3.Clave1
                     raiz.Rama3.Rama3 = raiz.Rama3.Rama2
-                if pos == 2:
+                elif pos == 2:
                     raiz.Rama2.Clave2 = raiz.Rama2.Clave1
                     raiz.Rama2.Rama3 = raiz.Rama2.Rama2
-                if pos == 1:
+                elif pos == 1:
                     raiz.Rama1.Clave2 = raiz.Rama1.Clave1
                     raiz.Rama1.Rama3 = raiz.Rama1.Rama2
-                if pos == 0:
+                elif pos == 0:
                     raiz.Rama0.Clave2 = raiz.Rama0.Clave1
                     raiz.Rama0.Rama3 = raiz.Rama0.Rama2
+                break
 
             if self.i == 1:
                 if pos == 4:
                     raiz.Rama4.Clave1 = raiz.Rama4.Clave0
                     raiz.Rama4.Rama2 = raiz.Rama4.Rama1
-                if pos == 3:
+                elif pos == 3:
                     raiz.Rama3.Clave1 = raiz.Rama3.Clave0
                     raiz.Rama3.Rama2 = raiz.Rama3.Rama1
-                if pos == 2:
+                elif pos == 2:
                     raiz.Rama2.Clave1 = raiz.Rama2.Clave0
                     raiz.Rama2.Rama2 = raiz.Rama2.Rama1
-                if pos == 1:
+                elif pos == 1:
                     raiz.Rama1.Clave1 = raiz.Rama1.Clave0
                     raiz.Rama1.Rama2 = raiz.Rama1.Rama1
-                if pos == 0:
+                elif pos == 0:
                     raiz.Rama0.Clave1 = raiz.Rama0.Clave0
                     raiz.Rama0.Rama2 = raiz.Rama0.Rama1
+                break
         self.i -= 1
 
-        if pos == 4:
+        if pos == 4: # por aqui voy---------------
             raiz.Rama4.Cuentas += 1
             raiz.Rama4.Rama1 = raiz.Rama4.Rama0
             raiz.Rama4.Clave0 = raiz.Clave3
             if (raiz.Rama3.Cuentas -1) == 3:
                 raiz.Clave3 = raiz.Rama3.Clave3
-            if (raiz.Rama3.Cuentas -1) == 2:
-                raiz.clave3 = raiz.Rama3.Clave2
-            if (raiz.Rama3.Cuentas -1) == 1:
+            elif (raiz.Rama3.Cuentas -1) == 2:
+                raiz.Clave3 = raiz.Rama3.Clave2
+            elif (raiz.Rama3.Cuentas -1) == 1:
                 raiz.Clave3 = raiz.Rama3.Clave1
-            if (raiz.Rama3.Cuentas -1) == 0:
+            elif (raiz.Rama3.Cuentas -1) == 0:
                 raiz.Clave3 = raiz.Rama3.Clave0
 
             if(raiz.Rama3.Cuentas -1) == 3:
                 raiz.Clave3 = raiz.Rama3.Clave3
-            if(raiz.Rama3.Cuentas -1) == 2:
+            elif(raiz.Rama3.Cuentas -1) == 2:
                 raiz.Clave3 = raiz.Rama3.Clave2
-            if(raiz.Rama3.Cuentas -1) == 1:
+            elif(raiz.Rama3.Cuentas -1) == 1:
                 raiz.Clave3 = raiz.Rama3.Clave1
-            if(raiz.Rama3.Cuentas -1) == 0:
+            elif(raiz.Rama3.Cuentas -1) == 0:
                 raiz.Clave3 = raiz.Rama3.Clave0
 
             if (raiz.Rama3.Cuentas) == 4:
                 raiz.Rama4.Rama0 = raiz.Rama3.Rama4
-            if (raiz.Rama3.Cuentas) == 3:
+            elif (raiz.Rama3.Cuentas) == 3:
                 raiz.Rama4.Rama0 = raiz.Rama3.Rama3
-            if (raiz.Rama3.Cuentas) == 2:
+            elif (raiz.Rama3.Cuentas) == 2:
                 raiz.Rama4.Rama0 = raiz.Rama3.Rama2
-            if (raiz.Rama3.Cuentas) == 1:
+            elif (raiz.Rama3.Cuentas) == 1:
                 raiz.Rama4.Rama0 = raiz.Rama3.Rama1
-            if (raiz.Rama4.Cuentas) == 0:
+            elif (raiz.Rama4.Cuentas) == 0:
                 raiz.Rama4.Rama0 = raiz.Rama3.Rama0
             self.raiz.Rama3.Cuentas -= 1
 
-        if pos == 3:
+        elif pos == 3:
             raiz.Rama3.Cuentas = raiz.Rama3.Cuentas +1
             raiz.Rama3.Rama1 = raiz.Rama3.Rama0
             raiz.Rama3.Clave0 = raiz.Clave2
             if (raiz.Rama2.Cuentas -1) == 3:
                 raiz.Clave2 = raiz.Rama2.Clave3
-            if (raiz.Rama2.Cuentas -1) == 2:
+            elif (raiz.Rama2.Cuentas -1) == 2:
                 raiz.Clave2 = raiz.Rama2.Clave3
-            if (raiz.Rama2.Cuentas -1) == 1:
+            elif (raiz.Rama2.Cuentas -1) == 1:
                 raiz.Clave2 = raiz.Rama2.Clave1
-            if (raiz.Rama2.Cuentas -1) == 0:
+            elif (raiz.Rama2.Cuentas -1) == 0:
                 raiz.Clave2 = raiz.Rama2.Clave0
 
             if (raiz.Rama2.Cuentas) == 4:
                 raiz.Rama3.Rama0 = raiz.Rama2.Rama4
-            if (raiz.Rama2.Cuentas) == 3:
+            elif (raiz.Rama2.Cuentas) == 3:
                 raiz.Rama3.Rama0 = raiz.Rama2.Rama3
-            if (raiz.Rama2.Cuentas) == 2:
+            elif (raiz.Rama2.Cuentas) == 2:
                 raiz.Rama3.Rama0 = raiz.Rama2.Rama2
-            if (raiz.Rama2.Cuentas) == 1:
+            elif (raiz.Rama2.Cuentas) == 1:
                 raiz.Rama3.Rama0 = raiz.Rama2.Rama1
-            if (raiz.Rama2.Cuentas) == 0:
+            elif (raiz.Rama2.Cuentas) == 0:
                 raiz.Rama3.Rama0 = raiz.Rama2.Rama0
             self.raiz.Rama2.Cuentas -= 1
 
-        if pos == 2:
+        elif pos == 2:
             raiz.Rama2.Cuentas = raiz.Rama2.Cuentas +1
             raiz.Rama2.Rama1 = raiz.Rama2.Rama0
             raiz.Rama2.Clave0 = raiz.Clave1
             if (raiz.Rama1.Cuentas -1) ==3:
                 raiz.Clave1 = raiz.Rama1.Clave3
-            if (raiz.Rama1.Cuentas -1) ==2:
-                raiz.clave1 = raiz.Rama1.Clave2
-            if (raiz.Rama1.Cuentas -1) ==1:
+            elif (raiz.Rama1.Cuentas -1) ==2:
+                raiz.Clave1 = raiz.Rama1.Clave2
+            elif (raiz.Rama1.Cuentas -1) ==1:
                 raiz.Clave1 = raiz.Rama1.Clave1
-            if (raiz.Rama1.Cuentas -1) ==0:
+            elif (raiz.Rama1.Cuentas -1) ==0:
                 raiz.Clave1 = raiz.Rama1.Clave0
 
             if (raiz.Rama1.Cuentas) == 4:
                 raiz.Rama2.Rama0 = raiz.Rama1.Rama4
-            if (raiz.Rama1.Cuentas) == 3:
+            elif (raiz.Rama1.Cuentas) == 3:
                 raiz.Rama2.Rama0 = raiz.Rama1.Rama3
-            if (raiz.Rama1.Cuentas) == 2:
+            elif (raiz.Rama1.Cuentas) == 2:
                 raiz.Rama2.Rama0 = raiz.Rama1.Rama2
-            if (raiz.Rama2.Cuentas) == 1:
+            elif (raiz.Rama2.Cuentas) == 1:
                 raiz.Rama2.Rama0 = raiz.Rama1.Rama1
-            if (raiz.Rama2.Cuentas) == 0:
+            elif (raiz.Rama2.Cuentas) == 0:
                 raiz.Rama2.Rama0 = raiz.Rama1.Rama0
             raiz.Rama1.Cuentas -= 1
 
-        if pos == 1:
+        elif pos == 1:
             raiz.Rama1.Cuentas = raiz.Rama1.Cuentas + 1
             raiz.Rama1.Rama1 = raiz.Rama1.Rama0
             raiz.Rama1.Clave0 = raiz.Clave0
             if (raiz.Rama0.Cuentas -1) == 3:
                 raiz.Clave0 = raiz.Rama0.Clave3
-            if (raiz.Rama0.Cuentas -1) == 2:
+            elif (raiz.Rama0.Cuentas -1) == 2:
                 raiz.Clave0 = raiz.Rama0.Clave2
-            if (raiz.Rama0.Cuentas -1) == 1:
+            elif (raiz.Rama0.Cuentas -1) == 1:
                 raiz.Clave0 = raiz.Rama0.Clave1
-            if (raiz.Rama0.Cuentas -1) == 0:
+            elif (raiz.Rama0.Cuentas -1) == 0:
                 raiz.Clave0 = raiz.Rama0.Clave0
 
             if (raiz.Rama0.Cuentas) == 4:
                 raiz.Rama1.Rama0 = raiz.Rama0.Rama4
-            if (raiz.Rama0.Cuentas) == 3:
+            elif (raiz.Rama0.Cuentas) == 3:
                 raiz.Rama1.Rama0 = raiz.Rama0.Rama3
-            if (raiz.Rama0.Cuentas) == 2:
+            elif (raiz.Rama0.Cuentas) == 2:
                 raiz.Rama1.Rama0 = raiz.Rama0.Rama2
-            if (raiz.Rama0.Cuentas) == 1:
+            elif (raiz.Rama0.Cuentas) == 1:
                 raiz.Rama1.Rama0 = raiz.Rama0.Rama1
-            if (raiz.Rama0.Cuentas) == 0:
+            elif (raiz.Rama0.Cuentas) == 0:
                 raiz.Rama1.Rama0 = raiz.Rama0.Rama0
             raiz.Rama0.Cuentas -= 1
+
 
     def MoverIzq(self, raiz, pos):
         i = 0
@@ -941,130 +976,148 @@ class ArbolB:
             if (raiz.Rama3.Cuentas -1) == 3:
                 raiz.Rama3.Clave3 = raiz.Clave3
                 raiz.Rama3.Rama4 = raiz.Rama4.Rama0
-            if (raiz.Rama3.Cuentas -1) == 2:
+            elif (raiz.Rama3.Cuentas -1) == 2:
                 raiz.Rama3.Clave2 = raiz.Clave3
                 raiz.Rama3.Rama2 = raiz.Rama4.Rama0
-            if (raiz.Rama3.Cuentas -1) == 1:
+            elif (raiz.Rama3.Cuentas -1) == 1:
                 raiz.Rama3.Clave1 = raiz.Clave3
                 raiz.Rama3.Rama1 = raiz.Rama4.Rama0
-            if (raiz.Rama3.Cuentas -1) == 0:
+            elif (raiz.Rama3.Cuentas -1) == 0:
                 raiz.Rama3.Clave0 = raiz.Clave3
                 raiz.Rama3.Rama0 = raiz.Rama4.Rama0
             raiz.Clave3 = raiz.Rama4.Clave0
             raiz.Rama4.Rama0 = raiz.Rama4.Rama1
             raiz.Rama4.Cuentas -= 1
             i =1
-        if pos == 3:
+
+        elif pos == 3:
             posv = raiz.Rama3.Cuentas + 1
             raiz.Rama3.Cuentas = raiz.Rama3.Cuentas +1
             if (raiz.Rama2.Cuentas -1) == 3:
                 raiz.Rama2.Clave3 = raiz.Clave2
                 raiz.Rama2.Rama4 = raiz.Rama3.Rama0
-            if (raiz.Rama2.Cuentas -1) == 2:
+            elif (raiz.Rama2.Cuentas -1) == 2:
                 raiz.Rama2.Clave2 = raiz.Clave2
                 raiz.Rama2.Rama2 = raiz.Rama3.Rama0
-            if (raiz.Rama2.Cuentas -1) == 1:
+            elif (raiz.Rama2.Cuentas -1) == 1:
                 raiz.Rama2.Clave1 = raiz.Clave2
                 raiz.Rama2.Rama1 = raiz.Rama3.Rama0
-            if (raiz.Rama2.Cuentas -1) == 0:
+            elif (raiz.Rama2.Cuentas -1) == 0:
                 raiz.Rama2.Clave0 = raiz.Clave2
                 raiz.Rama2.Rama0 = raiz.Rama3.Rama0
             raiz.Clave2 = raiz.Rama3.Clave0
             raiz.Rama3.Rama0 = raiz.Rama3.Rama1
             raiz.Rama3.Cuentas -= 1
             i =1
-        if pos == 2:
+
+        elif pos == 2:
             posv = raiz.Rama2.Cuentas +1
             raiz.Rama2.Cuentas = raiz.Rama.Cuentas +1
             if (raiz.Rama1.Cuentas -1)  == 3:
                 raiz.Rama1.Clave3 = raiz.Clave1
                 raiz.Rama1.Rama4 = raiz.Rama2.Rama0
-            if (raiz.Rama1.Cuentas -1) == 2:
+            elif (raiz.Rama1.Cuentas -1) == 2:
                 raiz.Rama1.Clave2 = raiz.Clave1
                 raiz.Rama1.Rama2 = raiz.Rama2.Rama0
-            if (raiz.Rama1.Cuentas -1) == 1:
+            elif (raiz.Rama1.Cuentas -1) == 1:
                 raiz.Rama1.Clave1 = raiz.Clave1
                 raiz.Rama1.Rama1 = raiz.Rama2.Rama0
-            if (raiz.Rama1.Cuentas -1) == 0:
+            elif (raiz.Rama1.Cuentas -1) == 0:
                 raiz.Rama1.Clave0 = raiz.Clave1
                 raiz.Rama1.Rama0 = raiz.Rama2.Rama0
             raiz.Clave1 = raiz.Rama2.Clave0
             raiz.Rama2.Rama0 = raiz.Rama2.Rama1
             raiz.Rama2.Cuentas -= 1
             i =1
-        if pos == 1:
+        elif pos == 1:
             posv = raiz.Rama1.Cuentas +1
             raiz.Rama1.Cuentas = raiz.Rama1.Cuentas + 1
             if (raiz.Rama0.Cuentas -1) == 3:
                 raiz.Rama0.Clave3 = raiz.Clave1
                 raiz.Rama0.Rama4 = raiz.Rama1.Rama0
-            if (raiz.Rama0.Cuentas -1) == 2:
+            elif (raiz.Rama0.Cuentas -1) == 2:
                 raiz.Rama0.Clave2 = raiz.Clave1
                 raiz.Rama0.Rama2 = raiz.Rama1.Rama0
-            if (raiz.Rama0.Cuentas -1) == 1:
+            elif (raiz.Rama0.Cuentas -1) == 1:
                 raiz.Rama0.Clave1 = raiz.Clave1
                 raiz.Rama0.Rama1 = raiz.Rama1.Rama0
-            if (raiz.Rama0.Cuentas -1) == 0:
+            elif (raiz.Rama0.Cuentas -1) == 0:
                 raiz.Rama0.Clave0 = raiz.Clave1
                 raiz.Rama0.Rama0 = raiz.Rama1.Rama0
             raiz.Clave0 = raiz.Rama1.Clave0
             raiz.Rama1.Rama0 = raiz.Rama1.Rama1
             raiz.Rama1.Cuentas -= 1
             i =1
-        if pos == 0:
-            os.write("Salta -> jmp")
+        elif pos == 0:
+            print("Salta -> jmp")
 
         while i != posv:
             if pos == 0:
                 if i == 1:
                     raiz.Rama0.Clave0 = raiz.Rama0.Clave1
                     raiz.Rama0.Rama1 = raiz.Rama0.Rama2
-                if i == 2:
+                    break
+                elif i == 2:
                     raiz.Rama0.Clave1 = raiz.Rama0.Clave2
                     raiz.Rama0.Rama2 = raiz.Rama0.Rama3
-                if i == 3:
+                    break
+                elif i == 3:
                     raiz.Rama0.Clave2 = raiz.Rama0.Clave3
                     raiz.Rama0.Rama3 = raiz.Rama0.Rama4
-            if pos == 1:
+                    break
+            elif pos == 1:
                 if i == 1:
                     raiz.Rama1.Clave0 = raiz.Rama1.Clave1
-                    raiz.Rama1.Rama1 = raiz.Rama1.Rama3
-                if i == 2:
+                    raiz.Rama1.Rama1 = raiz.Rama1.Rama2
+                    break
+                elif i == 2:
                     raiz.Rama1.Clave1 = raiz.Rama1.Clave2
                     raiz.Rama1.Rama2 = raiz.Rama1.Rama3
-                if i == 3:
-                    raiz.Rama1.Clave1 = raiz.Rama1.Clave2
+                    break
+                elif i == 3:
+                    raiz.Rama1.Clave2 = raiz.Rama1.Clave3
                     raiz.Rama1.Rama3 = raiz.Rama1.Rama4
-            if pos == 2:
+                    break
+            elif pos == 2:
                 if i == 1:
                     raiz.Rama2.Clave0 = raiz.Rama2.Clave1
                     raiz.Rama2.Rama1 = raiz.Rama2.Rama2
-                if i == 2:
+                    break
+                elif i == 2:
                     raiz.Rama2.Clave1 = raiz.Rama2.Clave2
                     raiz.Rama2.Rama2 = raiz.Rama2.Rama3
-                if i == 3:
+                    break
+                elif i == 3:
                     raiz.Rama2.Clave2 = raiz.Rama2.Clave3
                     raiz.Rama2.Rama3 = raiz.Rama2.Rama4
-            if pos == 3:
+                    break
+
+            elif pos == 3:
                 if i == 1:
                     raiz.Rama3.Clave0 = raiz.Rama3.Clave1
                     raiz.Rama3.Rama1 = raiz.Rama3.Rama2
-                if i == 2:
+                    break
+                elif i == 2:
                     raiz.Rama3.Clave1 = raiz.Rama3.Clave2
                     raiz.Rama3.Rama2 = raiz.Rama3.Rama3
-                if i == 3:
+                    break
+                elif i == 3:
                     raiz.Rama3.Clave2 = raiz.Rama3.Clave3
                     raiz.Rama3.Rama3 = raiz.Rama3.Rama4
-            if pos == 4:
+                    break
+            elif pos == 4:
                 if i == 1:
                     raiz.Rama4.Clave0 = raiz.Rama4.Clave1
                     raiz.Rama4.Rama1 = raiz.Rama4.Rama2
-                if i == 2:
+                    break
+                elif i == 2:
                     raiz.Rama4.Clave1 = raiz.Rama4.Clave2
                     raiz.Rama4.Rama2 = raiz.Rama4.Rama3
-                if i == 3:
+                    break
+                elif i == 3:
                     raiz.Rama4.Clave2 = raiz.Rama4.Clave3
                     raiz.Rama4.Rama3 = raiz.Rama4.Rama4
+                    break
             i = i +1
 
     def Quitar(self, raiz, pos):
@@ -1073,15 +1126,18 @@ class ArbolB:
             if j == 4:
                 raiz.Clave2 = raiz.Clave3
                 raiz.Rama3 = raiz.Rama4
-            if j == 3:
+                break
+            elif j == 3:
                 raiz.Clave1 = raiz.Clave2
                 raiz.Rama2 = raiz.Rama3
-            if j == 2:
+                break
+            elif j == 2:
                 raiz.Clave0 = raiz.Clave1
                 raiz.Rama1 = raiz.Rama2
-            if j == 1:
                 break
-            if j == 0:
+            elif j == 1:
+                break
+            elif j == 0:
                 break
         j += 1
         raiz.Cuentas -= 1
@@ -1093,17 +1149,17 @@ class ArbolB:
                     self.MoverDer(raiz, pos)
                 else:
                     self.Combina(raiz, pos)
-            if pos == 3:
+            elif pos == 3:
                 if raiz.Rama2.Cuentas > 2:
                     self.MoverDer(raiz, pos)
                 else:
                     self.Combina(raiz, pos)
-            if pos == 2:
+            elif pos == 2:
                 if raiz.Rama1.Cuentas > 2:
                     self.MoverDer(raiz, pos)
                 else:
                     self.Combina(raiz, pos)
-            if pos == 1:
+            elif pos == 1:
                 if raiz.Rama0.Cuentas > 2:
                     self.MoverDer(raiz, pos)
                 else:
@@ -1143,7 +1199,6 @@ class Graficar_Arbol_B:
 
         #Graficar_Arbol_B()
         self.Graficar_B(nodo)
-
         archivo.write("}")
         archivo.close()
         os.system("dot -Tpng grafica_BCarpeta.dot > grafica_BCarpeta.png")
@@ -1168,20 +1223,16 @@ class Graficar_Arbol_B:
                     break
             if c == 0:
                 archivo.write("|" + nodo.Clave0.getCarpeta())
-                archivo.write( "|<P" + str(c+1) + ">")
-                break
+                archivo.write("|<P" + str(c+1) + ">")
             elif c == 1:
                 archivo.write("|" + nodo.Clave1.getCarpeta())
-                archivo.write("|<p" + str(c+1) + ">")
-                break
+                archivo.write("|<P" + str(c+1) + ">")
             elif c == 2:
                 archivo.write("|" + nodo.Clave2.getCarpeta())
-                archivo.write("|<p" + str(c+1) + ">")
-                break
+                archivo.write("|<P" + str(c+1) + ">")
             elif c == 3:
                 archivo.write("|" + nodo.Clave3.getCarpeta())
-                archivo.write("|<p" + str(c+1) + ">")
-                break
+                archivo.write("|<P" + str(c+1) + ">")
             c += 1
 
         archivo.write("\"];\n")
@@ -1216,19 +1267,14 @@ class Graficar_Arbol_B:
             archivo.write(pasa + ":P" + str(k) + " -> " + "Nodo" + str(self.val) + ";\n")
             if k == 0:
                 self.RecursivoGrafica(nodo.Rama0)
-                break
             elif k == 1:
                 self.RecursivoGrafica(nodo.Rama1)
-                break
             elif k == 2:
                 self.RecursivoGrafica(nodo.Rama2)
-                break
             elif k == 3:
                 self.RecursivoGrafica(nodo.Rama3)
-                break
             elif k == 4:
                 self.RecursivoGrafica(nodo.Rama4)
-                break
             k += 1
 
 
@@ -1256,19 +1302,15 @@ class Graficar_Arbol_B:
                 if c == 0:
                     archivo.write("|" + nodo.Clave0.getCarpeta())
                     archivo.write("|<P" + str(c+1) + ">")
-                    break
                 elif c == 1:
                     archivo.write("|" + nodo.Clave1.getCarpeta())
                     archivo.write("|<P" + str(c+1) + ">")
-                    break
                 elif c == 2:
                     archivo.write("|" + nodo.Clave2.getCarpeta())
                     archivo.write("|<P" + str(c+1) + ">")
-                    break
                 elif c == 3:
                     archivo.write("|" + nodo.Clave3.getCarpeta())
                     archivo.write("|<P" + str(c+1) + ">")
-                    break
                 c += 1
 
             else:
@@ -1306,19 +1348,14 @@ class Graficar_Arbol_B:
             archivo.write(self.pasa + ":P" + str(k) + " -> " + "Nodo" + str(self.val) + ";\n")
             if k == 0:
                 self.RecursivoGrafica(nodo.Rama0)
-                break
             elif k == 1:
                 self.RecursivoGrafica(nodo.Rama1)
-                break
             elif k == 2:
                 self.RecursivoGrafica(nodo.Rama2)
-                break
             elif k == 3:
                 self.RecursivoGrafica(nodo.Rama3)
-                break
             elif k == 4:
                 self.RecursivoGrafica(nodo.Rama4)
-                break
             k += 1
 
     #Falta Graficar_FileII(usuario, dpto, nodo )
@@ -1422,19 +1459,24 @@ class Graficar_Arbol_B:
 
             self.val += 1
             if k == 0:
-                self.RecursivoGrafica(carpeta, nodo.Rama0)
+                #self.RecursivoGrafica(carpeta, nodo.Rama0)
+                self.RecursivoListado(carpeta, nodo.Rama0)
                 break
             elif k == 1:
-                self.RecursivoGrafica(carpeta, nodo.Rama1)
+                #self.RecursivoGrafica(carpeta, nodo.Rama1)
+                self.RecursivoListado(carpeta, nodo.Rama1)
                 break
             elif k == 2:
-                self.RecursivoGrafica(carpeta, nodo.Rama2)
+                #self.RecursivoGrafica(carpeta, nodo.Rama2)
+                self.RecursivoListado(carpeta, nodo.Rama2)
                 break
             elif k == 3:
-                self.RecursivoGrafica(carpeta, nodo.Rama3)
+                #self.RecursivoGrafica(carpeta, nodo.Rama3)
+                self.RecursivoListado(carpeta, nodo.Rama3)
                 break
             elif k == 4:
-                self.RecursivoGrafica(carpeta, nodo.Rama4)
+                #self.RecursivoGrafica(carpeta, nodo.Rama4)
+                self.RecursivoListado(carpeta, nodo.Rama4)
                 break
             k += 1
 
@@ -1502,7 +1544,7 @@ class Graficar_Arbol_B:
             elif (k == 1):
                if (nodo.Rama1 == None):
                    return
-               if (nodo.Ram1.Cuentas == 0):
+               if (nodo.Rama1.Cuentas == 0):
                    return
             elif (k == 2):
                 if nodo.Rama2 == None:
@@ -1556,6 +1598,18 @@ class Principal:
 
     x = NodoProyec("carpeta5")
     llama.Inserta(x)
+
+    j = NodoProyec("carpeta6")
+    llama.Inserta(j)
+
+    t = NodoProyec("carpeta7")
+    llama.Inserta(t)
+
+    u = NodoProyec("carpeta8")
+    llama.Inserta(u)
+
+    w = NodoProyec("carpeta9")
+    llama.Inserta(w)
 
     ss = Graficar_Arbol_B()
 
