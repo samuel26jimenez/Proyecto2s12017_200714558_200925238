@@ -1207,7 +1207,7 @@ class Graficar_Arbol_B:
     def Graficar_B(self, nodo):
         k =0
         c =0
-        archivo.write( "Nodo" + str(self.val) + "[label=\"<PO>")
+        archivo.write( "Nodo" + str(self.val) + "[label=\"<P1>")
         while(c < 4):
             if c == 0:
                 if (nodo.Clave0 == None):
@@ -1611,6 +1611,60 @@ class Principal:
     w = NodoProyec("carpeta9")
     llama.Inserta(w)
 
+
+
+
+    q = NodoProyec("carpeta10")
+    llama.Inserta(q)
+
+    u = NodoProyec("carpeta11")
+    llama.Inserta(u)
+
+    g = NodoProyec("carpeta12")
+    llama.Inserta(g)
+
+    k = NodoProyec("carpeta13")
+    llama.Inserta(k)
+
+    n = NodoProyec("carpeta14")
+    llama.Inserta(n)
+
+    m = NodoProyec("carpeta15")
+    llama.Inserta(m)
+
+    d = NodoProyec("carpeta16")
+    llama.Inserta(d)
+
+
+
+
+
+
+    ca = NodoProyec("carpeta17")
+    llama.Inserta(ca)
+    #
+    pu = NodoProyec("carpeta18")
+    llama.Inserta(pu)
+    #
+    pi = NodoProyec("carpeta19")
+    llama.Inserta(pi)
+    #
+    # cu = NodoProyec("carpeta20")
+    # llama.Inserta(cu)
+    #
+    # pe = NodoProyec("carpeta21")
+    # llama.Inserta(pe)
+    #
+    # xo = NodoProyec("carpeta22")
+    # llama.Inserta(xo)
+    #
+    # fi = NodoProyec("carpeta23")
+    # llama.Inserta(fi)
+
+
+
+
+
     ss = Graficar_Arbol_B()
 
     ss.Graficar_File(llama.p)
@@ -1618,5 +1672,5 @@ class Principal:
 #    ss.Graficar_FileII("carpeta98", llama.p)
 
 
-
+#puta me salio :P
 

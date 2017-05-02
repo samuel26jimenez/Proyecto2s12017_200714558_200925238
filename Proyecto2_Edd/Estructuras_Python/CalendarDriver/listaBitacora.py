@@ -27,3 +27,32 @@ class lista_bitacora:
             aux = nuevoNodo
             aux2.siguiente = aux
             aux.siguiente = None
+
+#--------- Graficar Lista Bitacora --------
+
+    def  Graficar_Bit(self):
+        archBi = open("lis_bitac.dot", "w")
+        archBi.write("digraph G{\n rankdir = LR;")
+        t1 = self.inicio
+        i = 0
+        while t1 != None:
+            archBi.write("\"Node" + str(i) + "\"[label = \"" + t1.get_descripcion() + "\" style = filled]\n")
+            if t1.siguiente != None:
+                archBi.write("\"Nonde" + str(i) + "\" -> \"Node" + str(i+1) + "\"" )
+            i = i+1
+            t1 = t1.siguiente
+        archBi.write("}")
+        archBi.close()
+        os.system("dot -Tpng lis_bitac.dot > lis_bitac.png")
+
+
+class Home_Bitacora:
+    a = lista_bitacora()
+    a.ingresar("Samuel")
+    a.ingresar("Alberto")
+    a.ingresar("Perez")
+    a.ingresar("Jimenez")
+    a.Graficar_Bit()
+    print("perro")
+
+
