@@ -1,21 +1,15 @@
 
 digraph G{
  node [shape=record] ;
-Nodo0[label="<P1>|carpeta9|<P1>"];
+Nodo0[label="<P1>|carpeta3|<P1>|carpeta6|<P2>|carpeta9|<P3>|carpeta12|<P4>"];
 Nodo0:P0 -> Nodo1;
-Nodo1[label="<PO>|carpeta3|<P1>|carpeta6|<P2>"];
-Nodo1:P0 -> Nodo2;
-Nodo2[label="<PO>|carpeta1|<P1>|carpeta2|<P2>"];
-Nodo2:P1 -> Nodo3;
-Nodo3[label="<PO>|carpeta4|<P1>|carpeta5|<P2>"];
-Nodo3:P2 -> Nodo4;
-Nodo4[label="<PO>|carpeta7|<P1>|carpeta8|<P2>"];
-Nodo0:P1 -> Nodo5;
-Nodo5[label="<PO>|carpeta12|<P1>|carpeta15|<P2>"];
-Nodo5:P0 -> Nodo6;
-Nodo6[label="<PO>|carpeta10|<P1>|carpeta11|<P2>"];
-Nodo6:P1 -> Nodo7;
-Nodo7[label="<PO>|carpeta13|<P1>|carpeta14|<P2>"];
-Nodo7:P2 -> Nodo8;
-Nodo8[label="<PO>|carpeta16|<P1>|carpeta17|<P2>|carpeta18|<P3>|carpeta19|<P4>"];
+Nodo1[label="<PO>|carpeta1|<P1>|carpeta2|<P2>"];
+Nodo0:P1 -> Nodo2;
+Nodo2[label="<PO>|carpeta4|<P1>|carpeta5|<P2>"];
+Nodo0:P2 -> Nodo3;
+Nodo3[label="<PO>|carpeta7|<P1>|carpeta8|<P2>"];
+Nodo0:P3 -> Nodo4;
+Nodo4[label="<PO>|carpeta10|<P1>|carpeta11|<P2>"];
+Nodo0:P4 -> Nodo5;
+Nodo5[label="<PO>|carpeta13|<P1>|carpeta14|<P2>|carpeta15|<P3>|carpeta16|<P4>"];
 }

@@ -142,7 +142,7 @@ class Metodo_Lista:
             tempo2 = self.ult
             i = 0
             while tempo != None:
-                archivo.write("\"Node"+str(i)+"\"[label = \""+tempo.get_cadTecla()+"\" style=filled]\n")
+                archivo.write("\"Node" + str(i) + "\"[label = \"" +  tempo.get_cadTecla()+"\" style=filled]\n")
                 if tempo.Lsig != None:
                     archivo.write("\"Node"+str(i)+"\" -> \"Node"+str(i+1)+"\"")
                 if tempo2.Lant != None:

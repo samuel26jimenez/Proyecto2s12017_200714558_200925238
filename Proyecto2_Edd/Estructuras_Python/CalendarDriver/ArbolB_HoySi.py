@@ -1377,11 +1377,6 @@ class Graficar_Arbol_B:
 
 
 
-
-
-
-
-
     #global nodoB
     def GraficarListadoB(self, nodo, carpeta):
         k = 0
@@ -1640,14 +1635,14 @@ class Principal:
 
 
 
-    ca = NodoProyec("carpeta17")
-    llama.Inserta(ca)
-    #
-    pu = NodoProyec("carpeta18")
-    llama.Inserta(pu)
-    #
-    pi = NodoProyec("carpeta19")
-    llama.Inserta(pi)
+    # ca = NodoProyec("carpeta17")
+    # llama.Inserta(ca)
+    # #
+    # pu = NodoProyec("carpeta18")
+    # llama.Inserta(pu)
+    # #
+    # pi = NodoProyec("carpeta19")
+    # llama.Inserta(pi)
     #
     # cu = NodoProyec("carpeta20")
     # llama.Inserta(cu)

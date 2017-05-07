@@ -28,17 +28,24 @@ class lista_bitacora:
             aux2.siguiente = aux
             aux.siguiente = None
 
+    def MostrarBi(self):
+        self.t1 = self.inicio
+        while(self.t1 != None):
+            print (self.t1.get_descripcion())
+            self.t1 = self.t1.siguiente
+
 #--------- Graficar Lista Bitacora --------
 
-    def  Graficar_Bit(self):
+    def Graficar_Bit(self):
         archBi = open("lis_bitac.dot", "w")
-        archBi.write("digraph G{\n rankdir = LR;")
+        #archBi.write("digraph G{\n rankdir = LR;")
+        archBi.write("digraph G{\n rankdir = LR")
         t1 = self.inicio
         i = 0
         while t1 != None:
             archBi.write("\"Node" + str(i) + "\"[label = \"" + t1.get_descripcion() + "\" style = filled]\n")
             if t1.siguiente != None:
-                archBi.write("\"Nonde" + str(i) + "\" -> \"Node" + str(i+1) + "\"" )
+                archBi.write("\"Node" + str(i) + "\" -> \"Node" + str(i+1) + "\"")
             i = i+1
             t1 = t1.siguiente
         archBi.write("}")
@@ -52,7 +59,11 @@ class Home_Bitacora:
     a.ingresar("Alberto")
     a.ingresar("Perez")
     a.ingresar("Jimenez")
+    a.ingresar("Malndonado")
+    a.ingresar("Schuman")
+    a.ingresar("Orellana")
+    a.MostrarBi()
     a.Graficar_Bit()
-    print("perro")
+    #print("perro")
 
 

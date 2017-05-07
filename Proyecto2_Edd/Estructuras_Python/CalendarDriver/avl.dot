@@ -1,21 +1,21 @@
 digraph G{
-nodo2621146[label="<f0>|<f1>samuel21 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2621141[label="<f0>|<f1>samuel1 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2144862490[label="<f0>|<f1>jimenez \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2144862495[label="<f0>|<f1>alberto43 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2144862490:f0 -> nodo2144862495
-nodo2621156[label="<f0>|<f1>perez \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2144862490:f2 -> nodo2621156
-nodo2621141:f0 -> nodo2144862490
-nodo2621146:f0 -> nodo2621141
-nodo2621136[label="<f0>|<f1>samuel4 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2144862500[label="<f0>|<f1>samuel3 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2621136:f0 -> nodo2144862500
-nodo2144862510[label="<f0>|<f1>samuel6 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2621151[label="<f0>|<f1>samuel55 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2144862510:f0 -> nodo2621151
-nodo2144862505[label="<f0>|<f1>samuel7 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
-nodo2144862510:f2 -> nodo2144862505
-nodo2621136:f2 -> nodo2144862510
-nodo2621146:f2 -> nodo2621136
+nodo2629338[label="<f0>|<f1>samuel21 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2629333[label="<f0>|<f1>samuel1 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2144854298[label="<f0>|<f1>jimenez \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2144854303[label="<f0>|<f1>alberto43 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2144854298:f0 -> nodo2144854303
+nodo2629348[label="<f0>|<f1>perez \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2144854298:f2 -> nodo2629348
+nodo2629333:f0 -> nodo2144854298
+nodo2629338:f0 -> nodo2629333
+nodo2629328[label="<f0>|<f1>samuel4 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2144854308[label="<f0>|<f1>samuel3 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2629328:f0 -> nodo2144854308
+nodo2144854318[label="<f0>|<f1>samuel6 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2629343[label="<f0>|<f1>samuel55 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2144854318:f0 -> nodo2629343
+nodo2144854313[label="<f0>|<f1>samuel7 \nDatos.....|<f2>", shape=record,style=filled,fillcolor="blue:cyan", gradientangle="270"]
+nodo2144854318:f2 -> nodo2144854313
+nodo2629328:f2 -> nodo2144854318
+nodo2629338:f2 -> nodo2629328
 }

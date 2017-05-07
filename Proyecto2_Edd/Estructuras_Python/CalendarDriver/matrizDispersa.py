@@ -1,9 +1,12 @@
 import os
+import CalendarDriver
+from CalendarDriver import *
 #NODO MATRIZ
 class NodoMatriz:
 
-    def __init__(self, hashEventos, mes, ano):
+    def __init__(self, hashEventos, dia, mes, ano):
         self.hashEventos = hashEventos
+        self.dia = dia
         self.mes = mes
         self.ano = ano
         self.arriba = None
@@ -22,6 +25,9 @@ class NodoMatriz:
     def getAno(self):
         return self.ano
 
+    def getDia(self):
+        return self.dia
+
 
 #MATRIZ
 class Matriz:
@@ -30,15 +36,18 @@ class Matriz:
         self.inicioHorizontal = None
         self.inicioVertical = None
 
-    def ingresar(self, hashEve, month, year):
-        nuevoNodoMatriz = NodoMatriz(hashEve, month, year)
+    def ingresar(self, day, nombre, direccion, descripcion, hora, month, year):
+        hash = CalendarDriver.tablaHasssh()
+        hash.insertar(nombre,direccion,descripcion,hora)
+
+        nuevoNodoMatriz = NodoMatriz(hash, day, month, year)
 
         if self.vacioHorizont() == True:
-            nuevoNodoHorizontal = NodoMatriz("","",year)
+            nuevoNodoHorizontal = NodoMatriz("","","","","","",year)
             self.inicioHorizontal = nuevoNodoHorizontal
 
         if self.vacioVerti() == True:
-            nuevoNodoVertical = NodoMatriz("",month,"")
+            nuevoNodoVertical = NodoMatriz("","","","","",month,"")
             self.inicioVertical = nuevoNodoVertical
 
         ################# CREACION CABECERA HORIZONTAL #################
@@ -46,17 +55,17 @@ class Matriz:
         tempHorizont = self.inicioHorizontal
 
         if self.existeHorizont(year) == True:
-            while tempHorizont.getDominio() != year:
+            while tempHorizont.getAno() != year:
                 tempHorizont = tempHorizont.derecha
 
         else:
-            nuevoNodoHorizontal = NodoMatriz("","",year)
+            nuevoNodoHorizontal = NodoMatriz("","","","","","",year)
             temp2 = None
-            while tempHorizont != None and tempHorizont.getDominio() < year:
+            while tempHorizont != None and tempHorizont.getAno() < year:
                 temp2 = tempHorizont
                 tempHorizont = tempHorizont.derecha
 
-            if tempHorizont != None and tempHorizont.getDominio() > year:
+            if tempHorizont != None and tempHorizont.getAno() > year:
 
                 if tempHorizont == self.inicioHorizontal:
                     temp4 = self.inicioHorizontal
@@ -86,17 +95,17 @@ class Matriz:
             while tempHorizont.abajo != None:
                 temp5 = tempHorizont
                 tempHorizont = tempHorizont.abajo
-                if  tempHorizont.getLetra() == month or tempHorizont.getLetra() > month:
+                if  tempHorizont.getMes() == month or tempHorizont.getMes() > month:
                     break
 
-        if tempHorizont.getLetra() == month:
+        if tempHorizont.getMes() == month:
             if tempHorizont.atras != None:
                 while tempHorizont.atras != None:
                     tempHorizont = tempHorizont.atras
             tempHorizont.atras = nuevoNodoMatriz
             nuevoNodoMatriz.adelante = tempHorizont
 
-        elif tempHorizont.abajo != None and tempHorizont.abajo.getLetra() > month:
+        elif tempHorizont.abajo != None and tempHorizont.abajo.getMes() > month:
             temp6 = tempHorizont.abajo
             tempHorizont = nuevoNodoMatriz
             temp5.abajo = tempHorizont
@@ -104,7 +113,7 @@ class Matriz:
             temp6.arriba = tempHorizont
             tempHorizont.arriba = temp5
 
-        elif tempHorizont != None and tempHorizont.getLetra() > month:
+        elif tempHorizont != None and tempHorizont.getMes() > month:
             temp6 = tempHorizont
             tempHorizont = nuevoNodoMatriz
             temp5.abajo = tempHorizont
@@ -121,17 +130,17 @@ class Matriz:
         tempVerti = self.inicioVertical
 
         if self.existeVerti(month) == True:
-            while tempVerti.getLetra() != month:
+            while tempVerti.getMes() != month:
                 tempVerti = tempVerti.abajo
 
         else:
-            nuevoNodoVertical = NodoMatriz("", month, "")
+            nuevoNodoVertical = NodoMatriz("","","","","",month,"")
             temp3 = None
-            while tempVerti != None and tempVerti.getLetra() < month:
+            while tempVerti != None and tempVerti.getMes() < month:
                 temp3 = tempVerti
                 tempVerti = tempVerti.abajo
 
-            if tempVerti != None and tempVerti.getLetra() > month:
+            if tempVerti != None and tempVerti.getMes() > month:
                 if tempVerti == self.inicioVertical:
                     temp4 = self.inicioVertical
                     tempVerti = nuevoNodoVertical
@@ -160,13 +169,13 @@ class Matriz:
             while tempVerti.derecha != None:
                 temp5 = tempVerti
                 tempVerti = tempVerti.derecha
-                if  tempVerti.getDominio() == year or tempVerti.getDominio() > year:
+                if  tempVerti.getAno() == year or tempVerti.getAno() > year:
                     break
 
-        if tempVerti.getDominio() == year and tempVerti.getHash() != hashEve:
+        if tempVerti.getAno() == year and tempVerti.getDia() != day:
             return
 
-        elif tempVerti.derecha != None and tempVerti.derecha.getDominio() > year:
+        elif tempVerti.derecha != None and tempVerti.derecha.getAno() > year:
             temp6 = tempVerti
             tempVerti = nuevoNodoMatriz
             temp5.derecha = tempVerti
@@ -174,7 +183,7 @@ class Matriz:
             temp6.izquierda = tempVerti
             tempVerti.izquierda = temp5
 
-        elif tempVerti != None and  tempVerti.getDominio() != "" and tempVerti.getDominio() > year:
+        elif tempVerti != None and  tempVerti.getAno() != "" and tempVerti.getAno() > year:
             temp6 = tempVerti
             tempVerti = nuevoNodoMatriz
             temp5.derecha = tempVerti
@@ -201,7 +210,7 @@ class Matriz:
     def existeVerti(self, letra):
         temporal = self.inicioVertical
         while temporal != None:
-            if temporal.getLetra() == letra:
+            if temporal.getMes() == letra:
                 return True
             else:
                 temporal = temporal.abajo
@@ -212,7 +221,7 @@ class Matriz:
         temp = self.inicioHorizontal
 
         while temp != None:
-            if temp.getDominio() == dominio:
+            if temp.getAno() == dominio:
                 return True
             else:
                 temp = temp.derecha
@@ -222,41 +231,83 @@ class Matriz:
     def buscarPorLetra(self, letra):
         if self.vacioVerti() == False:
             aux = self.inicioVertical
-            while aux != None and aux.getLetra() != letra:
+            while aux != None and aux.getMes() != letra:
                 aux = aux.abajo
 
-            if aux.getLetra() == letra:
+            if aux.getMes() == letra:
                 if aux.derecha != None:
                     cadena = ""
                     aux = aux.derecha
                     while aux != None:
-                        cadena = cadena + aux.getNombre() + "@" + aux.getDominio() +"\n"
+                        cadena = cadena + aux.getAno() +"\n"
                         if aux.atras != None:
                             aux2 = aux.atras
                             while aux2 != None:
-                                cadena = cadena + aux2.getNombre() + "@" + aux2.getDominio() + "\n"
+                                cadena = cadena + aux2.getAno() + "\n"
                                 aux2 = aux2.atras
                         aux = aux.derecha
 
                     return cadena
 
 
+    def modificarEvento(self, dia, nombre, nuevoNombre, direccion, descripcion, mes, ano):
+        if self.vacioHorizont() == False:
+            aux = self.inicioHorizontal
+            while aux.derecha != None and aux.getAno() != ano:
+                aux = aux.derecha
+
+            if aux.getAno() == ano:
+                if aux.abajo != None:
+                    aux = aux.abajo
+                    while aux.abajo != None and aux.getMes != mes:
+                        aux = aux.abajo
+
+                    if aux.getMes() == mes:
+                        if aux.getDia() != dia:
+                            while aux.atras != None and aux.getDia() != dia:
+                                aux = aux.atras
+
+                        if aux.getDia() == dia:
+                            aux.getHash().modificar(nombre, nuevoNombre, direccion, descripcion)
+
+
+    def eliminarEvento(self, dia, nombre, mes, ano):
+        if self.vacioHorizont() == False:
+            aux = self.inicioHorizontal
+            while aux.derecha != None and aux.getAno() != ano:
+                aux = aux.derecha
+
+            if aux.getAno() == ano:
+                if aux.abajo != None:
+                    aux = aux.abajo
+                    while aux.abajo != None and aux.getMes != mes:
+                        aux = aux.abajo
+
+                    if aux.getMes() == mes:
+                        if aux.getDia() != dia:
+                            while aux.atras != None and aux.getDia() != dia:
+                                aux = aux.atras
+
+                        if aux.getDia() == dia:
+                            aux.getHash().delete(nombre)
+
+
     def buscarPorDominio(self, dominio):
         if self.vacioHorizont() == False:
             aux = self.inicioHorizontal
-            while aux != None and aux.getDominio() != dominio:
+            while aux != None and aux.getAno() != dominio:
                 aux = aux.derecha
 
-            if aux.getDominio() == dominio:
+            if aux.getAno() == dominio:
                 if aux.abajo != None:
                     cadena = ""
                     aux = aux.abajo
                     while aux != None:
-                        cadena = cadena + aux.getNombre() + "@" + aux.getDominio() +" || Letra = "+ aux.getLetra()+"\n"
+                        cadena = cadena + aux.getAno() +" || Mes = "+ aux.getMes()+"\n"
                         if aux.atras != None:
                             aux2 = aux.atras
                             while aux2 != None:
-                                cadena = cadena + aux2.getNombre() + "@" + aux2.getDominio() +" || Letra = "+ aux.getLetra()+"\n"
+                                cadena = cadena + aux2.getAno() +" || Mes = "+ aux.getMes()+"\n"
                                 aux2 = aux2.atras
                         aux = aux.abajo
 
@@ -267,37 +318,37 @@ class Matriz:
         tempVerti = self.inicioVertical
         temp1 = temp2 = None
 
-        while tempHorizont != None and tempHorizont.getDominio() != dominio:
+        while tempHorizont != None and tempHorizont.getAno() != dominio:
             temp1 = tempHorizont
             tempHorizont = tempHorizont.derecha
 
-        while tempVerti != None and tempVerti.getLetra() != letra:
+        while tempVerti != None and tempVerti.getMes() != letra:
             temp2 = tempVerti
             tempVerti = tempVerti.abajo
 
-        if tempHorizont != None and tempVerti != None and tempHorizont.getDominio() == dominio and tempVerti.getLetra() == letra:
+        if tempHorizont != None and tempVerti != None and tempHorizont.getAno() == dominio and tempVerti.getMes() == letra:
 
-            while tempHorizont != None and tempHorizont.getLetra() != letra:
+            while tempHorizont != None and tempHorizont.getMes() != letra:
                 temp3 = tempHorizont
                 tempHorizont = tempHorizont.abajo
 
-            while tempVerti != None and tempVerti.getDominio() != dominio:
+            while tempVerti != None and tempVerti.getAno() != dominio:
                 temp4 = tempVerti
                 tempVerti = tempVerti.derecha
 
             if tempHorizont != None and tempHorizont.atras != None:
-                while tempHorizont.atras != None and tempHorizont.getNombre() != nombre:
+                while tempHorizont.atras != None and tempHorizont.getDia() != nombre:
                     temp3 = tempHorizont
                     tempHorizont = tempHorizont.atras
 
             if tempVerti != None and tempVerti.atras != None:
-                while tempVerti.atras != None and tempVerti.getNombre() != nombre:
+                while tempVerti.atras != None and tempVerti.getDia() != nombre:
                     temp4 = tempVerti
                     tempVerti = tempVerti.atras
 
             ################ EMPIEZA ELIMINACION DE NODOS EN CABECERA HORIZONTAL
-            if tempHorizont != None and tempHorizont.getNombre() == nombre:
-                if temp3 != None and temp3.getNombre() == "":
+            if tempHorizont != None and tempHorizont.getDia() == nombre:
+                if temp3 != None and temp3.getDia() == "":
                     if tempHorizont.atras != None:
                         temp3.abajo = tempHorizont.atras
                         tempHorizont.atras.arriba = temp3
@@ -343,8 +394,8 @@ class Matriz:
                         temp3.abajo = None
 
             ################ EMPIEZA ELIMINACION DE NODOS EN CABECERA VERTICAL
-            if tempVerti != None and tempVerti.getNombre() == nombre:
-                if temp4 != None and temp4.getNombre() == "":
+            if tempVerti != None and tempVerti.getDia() == nombre:
+                if temp4 != None and temp4.getDia() == "":
                     if tempVerti.atras != None:
                         temp4.derecha = tempVerti.atras
                         tempVerti.atras.izquierda = temp4
@@ -397,61 +448,61 @@ class Matriz:
             tempHorizont = self.inicioHorizontal
             tempVerti = self.inicioVertical
             file.write("\"INICIO\"[label = \"Inicio\", style = filled, fillcolor=\"#0D5A73\", fontcolor=\"#A2E7FF\", shape=box]\n")
-            file.write("\"INICIO\" -> \"n" + str(tempVerti.getLetra()) + "\"\n")
+            file.write("\"INICIO\" -> \"n" + str(tempVerti.getMes()) + "\"\n")
             while tempVerti != None:
-                file.write("\"n" + str(tempVerti.getLetra()) + "\"[label = \"" + str(tempVerti.getLetra()) + "\", style = filled, fillcolor=\"#E1E16E\", fontcolor=\"#040404\", shape=box]\n")
+                file.write("\"n" + str(tempVerti.getMes()) + "\"[label = \"" + str(tempVerti.getMes()) + "\", style = filled, fillcolor=\"#E1E16E\", fontcolor=\"#040404\", shape=box]\n")
                 if (tempVerti.abajo != None):
-                    file.write("\"n" + str(tempVerti.getLetra()) + "\" -> \"n" + str(tempVerti.abajo.getLetra()) + "\"[rankdir=UD];\n")
-                    file.write("\"n" + str(tempVerti.abajo.getLetra()) + "\" -> \"n" + str(tempVerti.getLetra()) + "\"\n")
+                    file.write("\"n" + str(tempVerti.getMes()) + "\" -> \"n" + str(tempVerti.abajo.getMes()) + "\"[rankdir=UD];\n")
+                    file.write("\"n" + str(tempVerti.abajo.getMes()) + "\" -> \"n" + str(tempVerti.getMes()) + "\"\n")
 
                 if (tempVerti.derecha != None):
-                    file.write("\"n" + str(tempVerti.derecha.getLetra()) + "," + str(
-                        tempVerti.derecha.getNombre()) + "," + str(
-                        tempVerti.derecha.getDominio()) + "\"[label = \"" + str(
-                        tempVerti.derecha.getNombre()) + "\", style = filled, fillcolor=\"#5C5C5A\", fontcolor=\"#FCFC29\", shape=circle]\n")
-                    file.write("\"n" + str(tempVerti.getLetra()) + "\" -> \"n" + str(tempVerti.derecha.getLetra()) + ","+ str(tempVerti.derecha.getNombre()) +","+ str(tempVerti.derecha.getDominio()) + "\"[constraint=false];\n")
-                    file.write("\"n" + str(tempVerti.derecha.getLetra()) + ","+ str(tempVerti.derecha.getNombre()) +","+ str(tempVerti.derecha.getDominio()) + "\" -> \"n" + str(tempVerti.getLetra()) + "\"[constraint=false];\n")
-                    file.write("{rank=same; \"n" + str(tempVerti.getLetra()) + "\"  \"n" + str(tempVerti.derecha.getLetra()) + ","+ str(tempVerti.derecha.getNombre()) +","+ str(tempVerti.derecha.getDominio()) + "\"}\n")
-                    file.write("{rank=same; \"n" + str(tempVerti.derecha.getLetra()) + ","+ str(tempVerti.derecha.getNombre()) +","+ str(tempVerti.derecha.getDominio()) + "\"  \"n" + str(tempVerti.getLetra()) + "\"}\n")
+                    file.write("\"n" + str(tempVerti.derecha.getMes()) + "," + str(
+                        tempVerti.derecha.getDia()) + "," + str(
+                        tempVerti.derecha.getAno()) + "\"[label = \"" + str(
+                        tempVerti.derecha.getDia()) + "\", style = filled, fillcolor=\"#5C5C5A\", fontcolor=\"#FCFC29\", shape=circle]\n")
+                    file.write("\"n" + str(tempVerti.getMes()) + "\" -> \"n" + str(tempVerti.derecha.getMes()) + ","+ str(tempVerti.derecha.getDia()) +","+ str(tempVerti.derecha.getAno()) + "\"[constraint=false];\n")
+                    file.write("\"n" + str(tempVerti.derecha.getMes()) + ","+ str(tempVerti.derecha.getDia()) +","+ str(tempVerti.derecha.getAno()) + "\" -> \"n" + str(tempVerti.getMes()) + "\"[constraint=false];\n")
+                    file.write("{rank=same; \"n" + str(tempVerti.getMes()) + "\"  \"n" + str(tempVerti.derecha.getMes()) + ","+ str(tempVerti.derecha.getDia()) +","+ str(tempVerti.derecha.getAno()) + "\"}\n")
+                    file.write("{rank=same; \"n" + str(tempVerti.derecha.getMes()) + ","+ str(tempVerti.derecha.getDia()) +","+ str(tempVerti.derecha.getAno()) + "\"  \"n" + str(tempVerti.getMes()) + "\"}\n")
                     AUXtempVerti = tempVerti.derecha
 
                 while (AUXtempVerti.derecha != None):
-                    file.write("\"n" + str(AUXtempVerti.derecha.getLetra()) + ","+ str(AUXtempVerti.derecha.getNombre()) +","+ str(AUXtempVerti.derecha.getDominio()) +"\"[label = \""
-                               + str(AUXtempVerti.derecha.getNombre()) + "\", style = filled, fillcolor=\"#5C5C5A\", fontcolor=\"#FCFC29\", shape=circle]\n")
-                    file.write("\"n" + str(AUXtempVerti.getLetra()) + ","+ str(AUXtempVerti.getNombre()) +","+ str(AUXtempVerti.getDominio()) + "\" -> \"n"
-                               + str(AUXtempVerti.derecha.getLetra()) + ","+ str(AUXtempVerti.derecha.getNombre()) +","+ str(AUXtempVerti.derecha.getDominio()) + "\"[constraint=false];\n")
-                    file.write("\"n" + str(AUXtempVerti.derecha.getLetra()) + ","+ str(AUXtempVerti.derecha.getNombre()) +","+ str(AUXtempVerti.derecha.getDominio())
-                               + "\" -> \"n" + str(AUXtempVerti.getLetra()) + ","+ str(AUXtempVerti.getNombre()) +","+ str(AUXtempVerti.getDominio()) + "\"[constraint=false];\n")
-                    file.write("{rank=same; \"n" + str(AUXtempVerti.getLetra()) + ","+ str(AUXtempVerti.getNombre()) +","+ str(AUXtempVerti.getDominio()) + "\" \"n" + str(AUXtempVerti.derecha.getLetra())
-                               + ","+ str(AUXtempVerti.derecha.getNombre()) +","+ str(AUXtempVerti.derecha.getDominio()) + "\"}\n");
-                    file.write("{rank=same; \"n" + str(AUXtempVerti.derecha.getLetra()) + ","+ str(AUXtempVerti.derecha.getNombre()) +","+ str(AUXtempVerti.derecha.getDominio()) + "\" \"n"
-                               + str(AUXtempVerti.getLetra()) + ","+ str(AUXtempVerti.getNombre()) +","+ str(AUXtempVerti.getDominio()) + "\"}\n");
+                    file.write("\"n" + str(AUXtempVerti.derecha.getMes()) + ","+ str(AUXtempVerti.derecha.getDia()) +","+ str(AUXtempVerti.derecha.getAno()) +"\"[label = \""
+                               + str(AUXtempVerti.derecha.getDia()) + "\", style = filled, fillcolor=\"#5C5C5A\", fontcolor=\"#FCFC29\", shape=circle]\n")
+                    file.write("\"n" + str(AUXtempVerti.getMes()) + ","+ str(AUXtempVerti.getDia()) +","+ str(AUXtempVerti.getAno()) + "\" -> \"n"
+                               + str(AUXtempVerti.derecha.getMes()) + ","+ str(AUXtempVerti.derecha.getDia()) +","+ str(AUXtempVerti.derecha.getAno()) + "\"[constraint=false];\n")
+                    file.write("\"n" + str(AUXtempVerti.derecha.getMes()) + ","+ str(AUXtempVerti.derecha.getDia()) +","+ str(AUXtempVerti.derecha.getAno())
+                               + "\" -> \"n" + str(AUXtempVerti.getMes()) + ","+ str(AUXtempVerti.getDia()) +","+ str(AUXtempVerti.getAno()) + "\"[constraint=false];\n")
+                    file.write("{rank=same; \"n" + str(AUXtempVerti.getMes()) + ","+ str(AUXtempVerti.getDia()) +","+ str(AUXtempVerti.getAno()) + "\" \"n" + str(AUXtempVerti.derecha.getMes())
+                               + ","+ str(AUXtempVerti.derecha.getDia()) +","+ str(AUXtempVerti.derecha.getAno()) + "\"}\n");
+                    file.write("{rank=same; \"n" + str(AUXtempVerti.derecha.getMes()) + ","+ str(AUXtempVerti.derecha.getDia()) +","+ str(AUXtempVerti.derecha.getAno()) + "\" \"n"
+                               + str(AUXtempVerti.getMes()) + ","+ str(AUXtempVerti.getDia()) +","+ str(AUXtempVerti.getAno()) + "\"}\n");
 
                     AUXtempVerti = AUXtempVerti.derecha
 
                 tempVerti = tempVerti.abajo
 
 
-            file.write("\"INICIO\" -> \"n" + str(tempHorizont.getDominio()) + "\"\n")
-            file.write("{rank=same; \"INICIO\"  \"n" + str(tempHorizont.getDominio()) + "\"}\n")
+            file.write("\"INICIO\" -> \"n" + str(tempHorizont.getAno()) + "\"\n")
+            file.write("{rank=same; \"INICIO\"  \"n" + str(tempHorizont.getAno()) + "\"}\n")
             while tempHorizont != None:
-                file.write("\"n" + str(tempHorizont.getDominio()) + "\"[label = \"" + str(tempHorizont.getDominio()) + "\", style = filled, fillcolor=\"#E1E16E\", fontcolor=\"#040404\", shape=box]\n")
+                file.write("\"n" + str(tempHorizont.getAno()) + "\"[label = \"" + str(tempHorizont.getAno()) + "\", style = filled, fillcolor=\"#E1E16E\", fontcolor=\"#040404\", shape=box]\n")
                 if (tempHorizont.derecha != None):
-                    file.write("\"n" + str(tempHorizont.getDominio()) + "\" -> \"n" + str(tempHorizont.derecha.getDominio()) + "\"\n")
-                    file.write("\"n" + str(tempHorizont.derecha.getDominio()) + "\" -> \"n" + str(tempHorizont.getDominio()) + "\"\n")
-                    file.write("{rank=same; \"n" + str(tempHorizont.getDominio()) + "\"  \"n" + str(tempHorizont.derecha.getDominio()) + "\"}\n")
-                    file.write("{rank=same; \"n" + str(tempHorizont.derecha.getDominio()) + "\"  \"n" + str(tempHorizont.getDominio()) + "\"}\n")
+                    file.write("\"n" + str(tempHorizont.getAno()) + "\" -> \"n" + str(tempHorizont.derecha.getAno()) + "\"\n")
+                    file.write("\"n" + str(tempHorizont.derecha.getAno()) + "\" -> \"n" + str(tempHorizont.getAno()) + "\"\n")
+                    file.write("{rank=same; \"n" + str(tempHorizont.getAno()) + "\"  \"n" + str(tempHorizont.derecha.getAno()) + "\"}\n")
+                    file.write("{rank=same; \"n" + str(tempHorizont.derecha.getAno()) + "\"  \"n" + str(tempHorizont.getAno()) + "\"}\n")
 
                 if (tempHorizont.abajo != None):
-                    file.write("\"n" + str(tempHorizont.getDominio()) + "\" -> \"n" + str(tempHorizont.abajo.getLetra()) + ","+ str(tempHorizont.abajo.getNombre()) +","+ str(tempHorizont.abajo.getDominio()) + "\"[rankdir=UD];\n")
-                    file.write("\"n" + str(tempHorizont.abajo.getLetra()) + ","+ str(tempHorizont.abajo.getNombre()) +","+ str(tempHorizont.abajo.getDominio()) + "\" -> \"n" + str(tempHorizont.getDominio()) + "\"\n")
+                    file.write("\"n" + str(tempHorizont.getAno()) + "\" -> \"n" + str(tempHorizont.abajo.getMes()) + ","+ str(tempHorizont.abajo.getDia()) +","+ str(tempHorizont.abajo.getAno()) + "\"[rankdir=UD];\n")
+                    file.write("\"n" + str(tempHorizont.abajo.getMes()) + ","+ str(tempHorizont.abajo.getDia()) +","+ str(tempHorizont.abajo.getAno()) + "\" -> \"n" + str(tempHorizont.getAno()) + "\"\n")
                     AUXtempHorizont = tempHorizont.abajo
 
                 while (AUXtempHorizont.abajo != None):
-                    file.write("\"n" + str(AUXtempHorizont.getLetra()) + ","+ str(AUXtempHorizont.getNombre()) +","+ str(AUXtempHorizont.getDominio()) + "\" -> \"n"
-                               + str(AUXtempHorizont.abajo.getLetra()) + ","+ str(AUXtempHorizont.abajo.getNombre()) +","+ str(AUXtempHorizont.abajo.getDominio()) + "\"[rankdir=UD];\n")
-                    file.write("\"n" + str(AUXtempHorizont.abajo.getLetra()) + ","+ str(AUXtempHorizont.abajo.getNombre()) +","+ str(AUXtempHorizont.abajo.getDominio())
-                               + "\" -> \"n" + str(AUXtempHorizont.getLetra()) + ","+ str(AUXtempHorizont.getNombre()) +","+ str(AUXtempHorizont.getDominio()) + "\"\n")
+                    file.write("\"n" + str(AUXtempHorizont.getMes()) + ","+ str(AUXtempHorizont.getDia()) +","+ str(AUXtempHorizont.getAno()) + "\" -> \"n"
+                               + str(AUXtempHorizont.abajo.getMes()) + ","+ str(AUXtempHorizont.abajo.getDia()) +","+ str(AUXtempHorizont.abajo.getAno()) + "\"[rankdir=UD];\n")
+                    file.write("\"n" + str(AUXtempHorizont.abajo.getMes()) + ","+ str(AUXtempHorizont.abajo.getDia()) +","+ str(AUXtempHorizont.abajo.getAno())
+                               + "\" -> \"n" + str(AUXtempHorizont.getMes()) + ","+ str(AUXtempHorizont.getDia()) +","+ str(AUXtempHorizont.getAno()) + "\"\n")
 
                     AUXtempHorizont = AUXtempHorizont.abajo
 
@@ -470,29 +521,29 @@ class Matriz:
 
                 while (AUXtempVerti.derecha != None):
                     if AUXtempVerti.atras != None:
-                        file.write("\"extra" + str(AUXtempVerti.getDominio()) + "\"[label = \"" + str(AUXtempVerti.derecha.getDominio()) + "\", style = filled, shape=box]\n")
+                        file.write("\"extra" + str(AUXtempVerti.getAno()) + "\"[label = \"" + str(AUXtempVerti.derecha.getAno()) + "\", style = filled, shape=box]\n")
 
                     if AUXtempVerti.atras != None:
-                        file.write("\"extra" + str(AUXtempVerti.getDominio()) + "\"[label = \"" + str(
-                            AUXtempVerti.getDominio()) + "\", style = filled, shape=box]\n")
-                        file.write("\"n" + str(AUXtempVerti.atras.getLetra()) + "," + str(
-                            AUXtempVerti.atras.getNombre()) + "," + str(
-                            AUXtempVerti.atras.getDominio()) + "\"[label = \"" + str(
-                            AUXtempVerti.atras.getNombre())  + "\", style = filled, shape=circle]\n")
-                        file.write("\"extra" + str(AUXtempVerti.getDominio()) + "\" -> \"n" + str(AUXtempVerti.atras.getLetra()) + "," + str(
-                            AUXtempVerti.atras.getNombre()) + "," + str(
-                            AUXtempVerti.atras.getDominio()) +"\"\n")
-                        file.write("\"n" + str(AUXtempVerti.atras.getLetra()) + "," + str(
-                            AUXtempVerti.atras.getNombre()) + "," + str(
-                            AUXtempVerti.atras.getDominio()) + "\" -> \"extra" + str(AUXtempVerti.getDominio()) +"\"\n")
+                        file.write("\"extra" + str(AUXtempVerti.getAno()) + "\"[label = \"" + str(
+                            AUXtempVerti.getAno()) + "\", style = filled, shape=box]\n")
+                        file.write("\"n" + str(AUXtempVerti.atras.getMes()) + "," + str(
+                            AUXtempVerti.atras.getDia()) + "," + str(
+                            AUXtempVerti.atras.getAno()) + "\"[label = \"" + str(
+                            AUXtempVerti.atras.getDia())  + "\", style = filled, shape=circle]\n")
+                        file.write("\"extra" + str(AUXtempVerti.getAno()) + "\" -> \"n" + str(AUXtempVerti.atras.getMes()) + "," + str(
+                            AUXtempVerti.atras.getDia()) + "," + str(
+                            AUXtempVerti.atras.getAno()) +"\"\n")
+                        file.write("\"n" + str(AUXtempVerti.atras.getMes()) + "," + str(
+                            AUXtempVerti.atras.getDia()) + "," + str(
+                            AUXtempVerti.atras.getAno()) + "\" -> \"extra" + str(AUXtempVerti.getAno()) +"\"\n")
                         AUX2Verti = AUXtempVerti.atras
 
                         while (AUX2Verti.atras != None):
-                            file.write("\"n" + str(AUX2Verti.atras.getLetra()) + ","+ str(AUX2Verti.atras.getNombre()) +","+ str(AUX2Verti.atras.getDominio()) +"\"[label = \"" + str(AUX2Verti.atras.getNombre()) + "\", style = filled, shape=circle]\n")
-                            file.write("\"n" + str(AUX2Verti.getLetra()) + ","+ str(AUX2Verti.getNombre()) +","+ str(AUX2Verti.getDominio()) + "\" -> \"n"
-                                       + str(AUX2Verti.atras.getLetra()) + ","+ str(AUX2Verti.atras.getNombre()) +","+ str(AUX2Verti.atras.getDominio()) + "\"\n")
-                            file.write("\"n" + str(AUX2Verti.atras.getLetra()) + ","+ str(AUX2Verti.atras.getNombre()) +","+ str(AUX2Verti.atras.getDominio())
-                                       + "\" -> \"n" + str(AUX2Verti.getLetra()) + ","+ str(AUX2Verti.getNombre()) +","+ str(AUX2Verti.getDominio()) + "\"\n")
+                            file.write("\"n" + str(AUX2Verti.atras.getMes()) + ","+ str(AUX2Verti.atras.getDia()) +","+ str(AUX2Verti.atras.getAno()) +"\"[label = \"" + str(AUX2Verti.atras.getDia()) + "\", style = filled, shape=circle]\n")
+                            file.write("\"n" + str(AUX2Verti.getMes()) + ","+ str(AUX2Verti.getDia()) +","+ str(AUX2Verti.getAno()) + "\" -> \"n"
+                                       + str(AUX2Verti.atras.getMes()) + ","+ str(AUX2Verti.atras.getDia()) +","+ str(AUX2Verti.atras.getAno()) + "\"\n")
+                            file.write("\"n" + str(AUX2Verti.atras.getMes()) + ","+ str(AUX2Verti.atras.getDia()) +","+ str(AUX2Verti.atras.getAno())
+                                       + "\" -> \"n" + str(AUX2Verti.getMes()) + ","+ str(AUX2Verti.getDia()) +","+ str(AUX2Verti.getAno()) + "\"\n")
 
                             AUX2Verti = AUX2Verti.atras
 
@@ -500,26 +551,26 @@ class Matriz:
 
 
                 if AUXtempVerti.atras != None:
-                    file.write("\"extra" + str(AUXtempVerti.getDominio()) + "\"[label = \"" + str(
-                        AUXtempVerti.getDominio()) + "\", style = filled, shape=box]\n")
-                    file.write("\"n" + str(AUXtempVerti.atras.getLetra()) + "," + str(
-                            AUXtempVerti.atras.getNombre()) + "," + str(
-                            AUXtempVerti.atras.getDominio()) + "\"[label = \"" + str(
-                            AUXtempVerti.atras.getNombre())  + "\", style = filled, shape=circle]\n")
-                    file.write("\"extra" + str(AUXtempVerti.getDominio()) + "\" -> \"n" + str(AUXtempVerti.atras.getLetra()) + "," + str(
-                            AUXtempVerti.atras.getNombre()) + "," + str(
-                            AUXtempVerti.atras.getDominio()) + "\"\n")
-                    file.write("\"n" + str(AUXtempVerti.atras.getLetra()) + "," + str(
-                            AUXtempVerti.atras.getNombre()) + "," + str(
-                            AUXtempVerti.atras.getDominio()) + "\" -> \"extra" + str(AUXtempVerti.getDominio()) +"\"\n")
+                    file.write("\"extra" + str(AUXtempVerti.getAno()) + "\"[label = \"" + str(
+                        AUXtempVerti.getAno()) + "\", style = filled, shape=box]\n")
+                    file.write("\"n" + str(AUXtempVerti.atras.getMes()) + "," + str(
+                            AUXtempVerti.atras.getDia()) + "," + str(
+                            AUXtempVerti.atras.getAno()) + "\"[label = \"" + str(
+                            AUXtempVerti.atras.getDia())  + "\", style = filled, shape=circle]\n")
+                    file.write("\"extra" + str(AUXtempVerti.getAno()) + "\" -> \"n" + str(AUXtempVerti.atras.getMes()) + "," + str(
+                            AUXtempVerti.atras.getDia()) + "," + str(
+                            AUXtempVerti.atras.getAno()) + "\"\n")
+                    file.write("\"n" + str(AUXtempVerti.atras.getMes()) + "," + str(
+                            AUXtempVerti.atras.getDia()) + "," + str(
+                            AUXtempVerti.atras.getAno()) + "\" -> \"extra" + str(AUXtempVerti.getAno()) +"\"\n")
                     AUX2Verti = AUXtempVerti.atras
 
                     while (AUX2Verti.atras != None):
-                        file.write("\"n" + str(AUX2Verti.atras.getLetra()) + ","+ str(AUX2Verti.atras.getNombre()) +","+ str(AUX2Verti.atras.getDominio()) +"\"[label = \"" + str(AUX2Verti.atras.getNombre()) + "\", style = filled, shape=circle]\n")
-                        file.write("\"n" + str(AUX2Verti.getLetra()) + ","+ str(AUX2Verti.getNombre()) +","+ str(AUX2Verti.getDominio()) + "\" -> \"n"
-                            + str(AUX2Verti.atras.getLetra()) + ","+ str(AUX2Verti.atras.getNombre()) +","+ str(AUX2Verti.atras.getDominio()) + "\"\n")
-                        file.write("\"n" + str(AUX2Verti.atras.getLetra()) + ","+ str(AUX2Verti.atras.getNombre()) +","+ str(AUX2Verti.atras.getDominio())
-                            + "\" -> \"n" + str(AUX2Verti.getLetra()) + ","+ str(AUX2Verti.getNombre()) +","+ str(AUX2Verti.getDominio()) + "\"\n")
+                        file.write("\"n" + str(AUX2Verti.atras.getMes()) + ","+ str(AUX2Verti.atras.getDia()) +","+ str(AUX2Verti.atras.getAno()) +"\"[label = \"" + str(AUX2Verti.atras.getDia()) + "\", style = filled, shape=circle]\n")
+                        file.write("\"n" + str(AUX2Verti.getMes()) + ","+ str(AUX2Verti.getDia()) +","+ str(AUX2Verti.getAno()) + "\" -> \"n"
+                            + str(AUX2Verti.atras.getMes()) + ","+ str(AUX2Verti.atras.getDia()) +","+ str(AUX2Verti.atras.getAno()) + "\"\n")
+                        file.write("\"n" + str(AUX2Verti.atras.getMes()) + ","+ str(AUX2Verti.atras.getDia()) +","+ str(AUX2Verti.atras.getAno())
+                            + "\" -> \"n" + str(AUX2Verti.getMes()) + ","+ str(AUX2Verti.getDia()) +","+ str(AUX2Verti.getAno()) + "\"\n")
 
                         AUX2Verti = AUX2Verti.atras
 

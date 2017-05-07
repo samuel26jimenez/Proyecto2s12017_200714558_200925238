@@ -42,7 +42,28 @@ class lista_usuarios:
         while(aux != None):
             if(aux.get_user() == usuario):
                 return True
-
             aux = aux.siguiente
-
         return False
+
+    def graficar(self):
+        fichero = open("lisUs.dot", "w")
+        fichero.write("digraph G{\n rankdir = LR")
+        tempo = self.inicio
+        conta = 0
+        while tempo != None:
+            fichero.write("\"Node" + str(conta) + "\"[label = \"" + tempo.get_user() + tempo.get_contra() + "\" style = filled]\n")
+            if tempo.siguiente != None:
+                fichero.write("\"Node" + str(conta) + "\" -> \"Node" + str(conta+1) + "\"" )
+            conta += 1
+            tempo = tempo.siguiente
+        fichero.write("}")
+        fichero.close()
+        os.system("dot -Tpng lisUs.dot > lisUs.png")
+
+class Principal:
+    x = lista_usuarios()
+    x.ingresar("Sammuel", " 234")
+    x.ingresar("Alberto", "1234")
+    x.ingresar("Perez", "456")
+    x.ingresar("Jimenez", "9584")
+    x.graficar()

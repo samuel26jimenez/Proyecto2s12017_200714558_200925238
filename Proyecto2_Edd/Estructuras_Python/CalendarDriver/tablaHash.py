@@ -7,11 +7,20 @@ class nodo_hash:
         self.descripcion = descripcion
         self.hora = hora
 
+    def set_name(self, nombre):
+        self.nombre = nombre
+
     def get_name(self):
         return self.nombre
 
+    def set_dir(self, direccion):
+        self.direccion = direccion
+
     def get_dir(self):
         return self.direccion
+
+    def set_descrip(self, descripcion):
+        self.descripcion = descripcion
 
     def get_descrip(self):
         return self.descripcion
@@ -19,7 +28,7 @@ class nodo_hash:
     def get_hora(self):
         return self.hora
 
-class tablaHash:
+class tablaHasssh:
 
     def __init__(self):
         self.tamano = 7
@@ -72,20 +81,7 @@ class tablaHash:
 
 
     def seChoco(self, num):
-        return ( num + 1 )
-        #pos = 0
-        #asciiCode = []
-        #chars = name
-        #chars.strip()
-        #for i in chars:
-        #    asciiCode = ord(i)
-
-        #for a in range(0, 3):
-        #   pos = pos + asciiCode[a]
-
-        #pos.__add__(int((num + 1).__pow__(2)))
-
-        #return (pos % self.tamano)
+        return ( num + 1 ) #lineal
 
 
     def REhash(self):
@@ -109,6 +105,7 @@ class tablaHash:
 
 
     def delete(self, nombre):
+        tamano = 0
         for i in range(0, self.tamano):
             if((self.nodoHash[i] != None) and (self.nodoHash[i].get_name() == nombre)):
                 self.nodoHash[i] = None
@@ -120,6 +117,18 @@ class tablaHash:
                 print(self.nodoHash[i].get_name()+"")
                 print(str(len(self.nodoHash)))
 
+    def modificar(self, nombre, nuevoNombre, direccion, descripcion):
+        for i in range(0, self.tamano):
+            if(nombre == self.nodoHash[i].get_name()):
+                if direccion != "":
+                    self.nodoHash[i].set_dir(direccion)
+                if descripcion != "":
+                    self.nodoHash[i].set_descrip(descripcion)
+                if nuevoNombre != "":
+                    self.nodoHash[i].set_name(nuevoNombre)
+                return
+
+
 #--------------------------------------------------------------------------------------------------------------------
 #-------------------------------------------- PRUEBAS ---------------------------------------------------------------
 # colita = Cola()
@@ -128,14 +137,14 @@ class tablaHash:
 # colita.ingresar(7)
 # colita.ingresar(9)
 
-hashi = tablaHash()
-hashi.insertar("rafa", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("pedro", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("felipe", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("kam", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("tom", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("kamasutra", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("margarita", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("PUTOS", "usac", "la mera verga", "son las que te importa")
-hashi.insertar("putas ricas", "usac", "la mera verga", "son las que te importa")
-hashi.imprimir()
+# hashi = tablaHash()
+# hashi.insertar("rafa", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("pedro", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("felipe", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("kam", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("tom", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("kamasutra", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("margarita", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("PUTOS", "usac", "la mera verga", "son las que te importa")
+# hashi.insertar("putas ricas", "usac", "la mera verga", "son las que te importa")
+# hashi.imprimir()
