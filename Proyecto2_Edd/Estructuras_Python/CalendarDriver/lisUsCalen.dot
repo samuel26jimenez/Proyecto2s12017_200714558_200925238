@@ -1,6 +1,0 @@
-digraph G{
- rankdir = LR"Node0"[label = "Samuel 2468" style = filled]
-"Node0" -> "Node1""Node1"[label = "Alberto 3579" style = filled]
-"Node1" -> "Node2""Node2"[label = "Perez 4670" style = filled]
-"Node2" -> "Node3""Node3"[label = "Jimenez 9273" style = filled]
-}
